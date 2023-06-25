@@ -1893,6 +1893,7 @@ CreateMon = 0x0803DA54|1;
 
 /* TM Case Redesign */
 spriteIdData = 0x2039934;
+
 spriteIdPalette = 0x203993A ;
 
 SetMonIconTransparency = 0x808cfc4 | 1;
