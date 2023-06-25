@@ -1738,6 +1738,7 @@ Task_HofPC_HandleInput = 0x80F2E8C | 1;
 Task_HofPC_PrintDataIsCorrupted = 0x80F30A4 | 1;
 SpriteCB_GetOnScreenAndAnimate = 0x80F3870 | 1;
 AddTextPrinterParameterized2 = 0x80F6CD0 | 1;
+AddTextPrinterParameterized3 = 0x812E51C | 1;
 NewMenuHelpers_DrawDialogueFrame = 0x80F6EE4 | 1;
 GetFontAttribute = 0x80F79D8 | 1;
 dp13_810BB8C = 0x810BB8C | 1;
@@ -1890,3 +1891,10 @@ GenerateUnownPersonalityByLetter = 0x08082A88|1;
 Random = 0x08044EC8|1;
 CreateMon = 0x0803DA54|1;
 
+/* TM Case Redesign */
+spriteIdData = 0x2039934;
+spriteIdPalette = 0x203993A ;
+
+SetMonIconTransparency = 0x808cfc4 | 1;
+gText_TMCase = 0x84166d3;
+SetPartyHPBarSprite = 0x8097414 | 1;
