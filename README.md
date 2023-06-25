@@ -1,23 +1,13 @@
-## Template
+# INFO
+This code just makes your party pokemon to be shown in tm case , only for FIRE RED BINARY.
 
-This template currently builds no code, but has many functions declared and ready to use that aren't very specific to any one application.  Each new branch for code that is inserted into Fire Gold will be based on this branch.
-
-### Build Instructions
+## Build Instructions
 
 Build the same as the CFRU:  `python scripts/make.py`
 
-#### Cloning the repo
-
-Open your terminal to whatever folder you want to download this repo into. Then, do the following to download the repo:
-
-```shell
-$ git clone https://github.com/BluRosie/firegold-code.git
-$ cd firegold-code
-```
-
 Alternatively, you can download the code as a .zip file from the arrow above.  You can navigate to whichever branch for whichever feature you would like to check out as well.
 
-#### Adding your ROM
+### Adding your ROM
 
 Copy your ROM to this directory and rename it `BPRE0.gba`.
 
@@ -49,8 +39,5 @@ This won't actually modify `BPRE0.gba`, instead your output will be in `test.gba
 
 ### Credits
 
-Research made possible by [pokeemerald](https://github.com/pret/pokeemerald) and [pokefirered](https://github.com/pret/pokefirered).
-
-Spherical Ice initially made the [Unown Report code](https://github.com/sphericalice/bpre-unown-report).  I forked it and ported it to the [CFRU's build system](https://github.com/BluRosie/bpre-unown-report).
-
+Blurose for this template he took out from CFRU and Greenphx for his awesome code
 Skeli made the [build system used in the CFRU](https://github.com/Skeli789/Complete-Fire-Red-Upgrade) which is used here.
