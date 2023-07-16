@@ -461,7 +461,7 @@
 #define REG_DMA3CNT_L   (*(vu16 *)REG_ADDR_DMA3CNT_L)
 #define REG_DMA3CNT_H   (*(vu16 *)REG_ADDR_DMA3CNT_H)
 
-#define REG_TMCNT(n)    (*(vu16 *)(REG_ADDR_TMCNT + ((n) * 4)))
+#define REG_TMCNT(n)    (*(vu32 *)(REG_ADDR_TMCNT + ((n) * 4)))
 #define REG_TMCNT_L(n)  (*(vu16 *)(REG_ADDR_TMCNT_L + ((n) * 4)))
 #define REG_TMCNT_H(n)  (*(vu16 *)(REG_ADDR_TMCNT_H + ((n) * 4)))
 #define REG_TM0CNT      (*(vu32 *)REG_ADDR_TM0CNT)
@@ -501,24 +501,23 @@
 // I/O register fields
 
 // DISPCNT
-#define DISPCNT_MODE_0          0x0000 // BG0: text, BG1: text, BG2: text,   BG3: text
-#define DISPCNT_MODE_1          0x0001 // BG0: text, BG1: text, BG2: affine, BG3: off
-#define DISPCNT_MODE_2          0x0002 // BG0: off,  BG1: off,  BG2: affine, BG3: affine
-#define DISPCNT_MODE_3          0x0003 // Bitmap mode, 240x160, BGR555 color
-#define DISPCNT_MODE_4          0x0004 // Bitmap mode, 240x160, 256 color palette
-#define DISPCNT_MODE_5          0x0005 // Bitmap mode, 160x128, BGR555 color
-#define DISPCNT_HBLANK_INTERVAL 0x0020 // Allow access to OAM during H-Blank
-#define DISPCNT_OBJ_1D_MAP      0x0040
-#define DISPCNT_FORCED_BLANK    0x0080
-#define DISPCNT_BG0_ON          0x0100
-#define DISPCNT_BG1_ON          0x0200
-#define DISPCNT_BG2_ON          0x0400
-#define DISPCNT_BG3_ON          0x0800
-#define DISPCNT_BG_ALL_ON       0x0F00
-#define DISPCNT_OBJ_ON          0x1000
-#define DISPCNT_WIN0_ON         0x2000
-#define DISPCNT_WIN1_ON         0x4000
-#define DISPCNT_OBJWIN_ON       0x8000
+#define DISPCNT_MODE_0       0x0000 // BG0: text, BG1: text, BG2: text,   BG3: text
+#define DISPCNT_MODE_1       0x0001 // BG0: text, BG1: text, BG2: affine, BG3: off
+#define DISPCNT_MODE_2       0x0002 // BG0: off,  BG1: off,  BG2: affine, BG3: affine
+#define DISPCNT_MODE_3       0x0003 // Bitmap mode, 240x160, BGR555 color
+#define DISPCNT_MODE_4       0x0004 // Bitmap mode, 240x160, 256 color palette
+#define DISPCNT_MODE_5       0x0005 // Bitmap mode, 160x128, BGR555 color
+#define DISPCNT_OBJ_1D_MAP   0x0040
+#define DISPCNT_FORCED_BLANK 0x0080
+#define DISPCNT_BG0_ON       0x0100
+#define DISPCNT_BG1_ON       0x0200
+#define DISPCNT_BG2_ON       0x0400
+#define DISPCNT_BG3_ON       0x0800
+#define DISPCNT_BG_ALL_ON    0x0F00
+#define DISPCNT_OBJ_ON       0x1000
+#define DISPCNT_WIN0_ON      0x2000
+#define DISPCNT_WIN1_ON      0x4000
+#define DISPCNT_OBJWIN_ON    0x8000
 
 // DISPSTAT
 #define DISPSTAT_VBLANK      0x0001 // in V-Blank
@@ -587,7 +586,6 @@
 #define BLDCNT_TGT1_BG3      (1 << 3)
 #define BLDCNT_TGT1_OBJ      (1 << 4)
 #define BLDCNT_TGT1_BD       (1 << 5)
-#define BLDCNT_TGT1_ALL      (BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD)
 // Bits 6-7 select the special effect
 #define BLDCNT_EFFECT_NONE      (0 << 6)   // no special effect
 #define BLDCNT_EFFECT_BLEND     (1 << 6)   // 1st+2nd targets mixed (controlled by BLDALPHA)
@@ -604,6 +602,7 @@
 
 // BLDALPHA
 #define BLDALPHA_BLEND(target1, target2) (((target2) << 8) | (target1))
+#define BLDALPHA_BLEND2(target1, target2) ((target1) | ((target2) << 8))
 
 // SOUNDCNT_H
 #define SOUND_CGB_MIX_QUARTER 0x0000
@@ -703,15 +702,8 @@
 #define KEY_INTR_ENABLE 0x0400
 #define KEY_OR_INTR     0x0000
 #define KEY_AND_INTR    0x8000
-#define DPAD_ANY        ((DPAD_RIGHT | DPAD_LEFT | DPAD_UP | DPAD_DOWN))
+#define DPAD_ANY        0x00F0
 #define JOY_EXCL_DPAD   0x030F
-
-// testing keys
-#define TEST_BUTTON(field, button) ({(field) & (button);})
-#define JOY_NEW(button)      TEST_BUTTON(gMain.newKeys,  button)
-#define JOY_HELD(button)     TEST_BUTTON(gMain.heldKeys, button)
-#define JOY_HELD_RAW(button) TEST_BUTTON(gMain.heldKeysRaw, button)
-#define JOY_REPT(button)     TEST_BUTTON(gMain.newAndRepeatedKeys, button)
 
 // interrupt flags
 #define INTR_FLAG_VBLANK  (1 <<  0)
