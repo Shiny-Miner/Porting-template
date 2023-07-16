@@ -41,7 +41,6 @@ if used.
 #include "../include/pokemon.h"
 #include "../include/gpu_regs.h"
 
-
 /*
 tm_case.c
 	adds party icons to the tm case
