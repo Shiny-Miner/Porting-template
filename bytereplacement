@@ -1,6 +1,16 @@
 #include "include/party_menu.h"
+################################
+### TM Case Text Positioning ###
+################################
+#Scrolling Arrows 
+08132036 AC 
+#TM-HMs name list
+08463191 0E 
+#"TM Case" title
+084631A9 02 
+#TM quauntity
+08131EE0 66
 
-# TM Case Text Positioning
-08132036 AC
-08463191 0E
-084631A9 02
+# fixes(not actually) palette issues with description box when new tm case gfx is inserted
+08131f64 00 48 00 47 91 A2 07 08
+
