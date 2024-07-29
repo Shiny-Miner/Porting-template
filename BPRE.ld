@@ -1898,3 +1898,6 @@ spriteIdPalette = 0x203993A ;
 SetMonIconTransparency = 0x808cfc4 | 1;
 gText_TMCase = 0x84166d3;
 SetPartyHPBarSprite = 0x8097414 | 1;
+
+LoadTmHmNameInMart = 0x0809b494 | 1;
+CanMonLearnTMTutor = 0x08120b20 | 1;
