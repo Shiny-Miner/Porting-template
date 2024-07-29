@@ -11,7 +11,12 @@ if used.
 #include "../include/random.h"
 #include "../include/constants/abilities.h"
 #include "../include/global.h"
+
+#include "../include/new/damage_calc.h"
 #include "../include/new/evolution.h"
+#include "../include/new/frontier.h"
+#include "../include/new/mega.h"
+#include "../include/new/dynamax.h"
 #include "../include/constants/items.h"
 #include "../include/constants/moves.h"
 #include "../include/tm_case.h"
