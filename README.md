@@ -1,5 +1,5 @@
 # INFO
-This code just makes your party pokemon to be shown in tm case , only for FIRE RED BINARY.
+This code makes your Pokemon being able to evolve in mid battles, only for FIRE RED BINARY.
 
 ## Build Instructions
 
