@@ -45,6 +45,11 @@
 #include "../include/constants/trainers.h"
 
 static void SpriteCB_UnusedDebugSprite(struct Sprite *sprite);
+static void PlayerTryEvolution(void);
+static void BeginLeftEvoluionAfterFade(void);
+static void BeginRightEvoluionAfterFade(void);
+static void WaitForEvolutionThenTryAnother(void);
+static void CB2_SetUpReshowBattleScreenAfterEvolution(void);
 static void HandleAction_UseMove(void);
 static void HandleAction_Switch(void);
 static void HandleAction_UseItem(void);
@@ -133,7 +138,8 @@ EWRAM_DATA u8 gBattleTextBuff3[TEXT_BUFF_ARRAY_COUNT] = {0};
 static EWRAM_DATA u32 sFlickerArray[25] = {0};
 EWRAM_DATA u32 gBattleTypeFlags = 0;
 EWRAM_DATA u8 gBattleTerrain = 0;
-EWRAM_DATA u32 gUnusedFirstBattleVar1 = 0;
+EWRAM_DATA bool8 gPlayerDoesNotWantToEvolveLeft = FALSE;
+EWRAM_DATA bool8 gPlayerDoesNotWantToEvolveRight = FALSE;
 EWRAM_DATA struct MultiBattlePokemonTx gMultiPartnerParty[3] = {0};
 EWRAM_DATA u8 *gBattleAnimBgTileBuffer = NULL;
 EWRAM_DATA u8 *gBattleAnimBgTilemapBuffer = NULL;
@@ -185,7 +191,7 @@ EWRAM_DATA u8 gMoveResultFlags = 0;
 EWRAM_DATA u32 gHitMarker = 0;
 static EWRAM_DATA u8 sUnusedBattlersArray[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA u8 gTakenDmgByBattler[MAX_BATTLERS_COUNT] = {0};
-EWRAM_DATA u8 gUnusedFirstBattleVar2 = 0;
+EWRAM_DATA u8 gBattleTerrainBackup = 0;
 EWRAM_DATA u16 gSideStatuses[2] = {0};
 EWRAM_DATA struct SideTimer gSideTimers[2] = {0};
 EWRAM_DATA u32 gStatuses3[MAX_BATTLERS_COUNT] = {0};
@@ -714,6 +720,8 @@ static void CB2_InitBattleInternal(void)
         AdjustFriendship(&gPlayerParty[i], FRIENDSHIP_EVENT_LEAGUE_BATTLE);
 
     gBattleCommunication[MULTIUSE_STATE] = 0;
+    gPlayerDoesNotWantToEvolveLeft = FALSE;
+    gPlayerDoesNotWantToEvolveRight = FALSE;
 }
 
 #define BUFFER_PARTY_VS_SCREEN_STATUS(party, flags, i)                    \
@@ -2992,7 +3000,7 @@ void BattleTurnPassed(void)
     for (i = 0; i < MAX_BATTLERS_COUNT; i++)
         *(gBattleStruct->monToSwitchIntoId + i) = PARTY_SIZE;
     *(&gBattleStruct->absentBattlerFlags) = gAbsentBattlerFlags;
-    gBattleMainFunc = HandleTurnActionSelectionState;
+    gBattleMainFunc = PlayerTryEvolution;
     gRandomTurnNumber = Random();
 }
 
