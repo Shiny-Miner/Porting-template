@@ -3098,6 +3098,80 @@ enum
     STATE_SELECTION_SCRIPT,
     STATE_WAIT_SET_BEFORE_ACTION,
 };
+    
+#define LEFT_PKMN gBattlerPartyIndexes[GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)]
+#define RIGHT_PKMN gBattlerPartyIndexes[GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT)]
+
+static void CB2_SetUpReshowBattleScreenAfterEvolution(void)
+{
+    gBattleTerrain = gBattleTerrainBackup; 
+    SetMainCallback2(ReshowBattleScreenAfterMenu);
+}
+
+#define tSpeciesToEvolveInto data[0]
+#define tBattlerPosition     data[1]
+
+static void Task_BeginBattleEvolutionScene(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        u8 battlerPosition;
+        u16 SpeciesToEvolveInto;
+        FreeAllWindowBuffers();
+        gCB2_AfterEvolution = CB2_SetUpReshowBattleScreenAfterEvolution;
+        gBattleTerrainBackup = gBattleTerrain; // Store the battle terrain to be reloaded later
+
+        battlerPosition = gTasks[taskId].tBattlerPosition;
+        SpeciesToEvolveInto = gTasks[taskId].tSpeciesToEvolveInto;
+        DestroyTask(taskId);
+        EvolutionScene(&gPlayerParty[battlerPosition], SpeciesToEvolveInto, TRUE, battlerPosition);
+    }
+}
+
+static void PlayerTryEvolution(void)
+{
+    u16 species;
+    u8 taskId; 
+    if (gLeveledUpInBattle & gBitTable[LEFT_PKMN] && !gPlayerDoesNotWantToEvolveLeft)
+    {
+        gLeveledUpInBattle &= ~(gBitTable[LEFT_PKMN]); // Mask the bit
+        species = GetEvolutionTargetSpecies(&gPlayerParty[LEFT_PKMN], EVO_MODE_NORMAL, ITEM_NONE);
+        if (species != SPECIES_NONE)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+            gBattleMainFunc = WaitForEvolutionThenTryAnother;
+            taskId = CreateTask(Task_BeginBattleEvolutionScene, 0);
+            gTasks[taskId].tSpeciesToEvolveInto = species;
+            gTasks[taskId].tBattlerPosition = LEFT_PKMN;
+            return;
+        }
+}
+    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && gLeveledUpInBattle & gBitTable[RIGHT_PKMN] && !gPlayerDoesNotWantToEvolveRight)
+    {
+        gLeveledUpInBattle &= ~(gBitTable[RIGHT_PKMN]); // Mask the bit
+        species = GetEvolutionTargetSpecies(&gPlayerParty[RIGHT_PKMN], EVO_MODE_NORMAL, ITEM_NONE);
+        if (species != SPECIES_NONE)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+            gBattleMainFunc = WaitForEvolutionThenTryAnother;
+            taskId = CreateTask(Task_BeginBattleEvolutionScene, 0);
+            gTasks[taskId].tSpeciesToEvolveInto = species;
+            gTasks[taskId].tBattlerPosition = RIGHT_PKMN;
+            return;
+        }
+    }
+
+    gBattleMainFunc = HandleTurnActionSelectionState;
+
+}
+
+static void WaitForEvolutionThenTryAnother(void)
+{
+    if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
+    {
+        gBattleMainFunc = PlayerTryEvolution;
+    }
+}
 
 static void HandleTurnActionSelectionState(void)
 {
