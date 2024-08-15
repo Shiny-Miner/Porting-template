@@ -1898,3 +1898,6 @@ spriteIdPalette = 0x203993A ;
 SetMonIconTransparency = 0x808cfc4 | 1;
 gText_TMCase = 0x84166d3;
 SetPartyHPBarSprite = 0x8097414 | 1;
+
+gBattlePartyCurrentOrder = 0x0203b0dc;
+TryReceiveLinkBattleData = 0x0800dd28| 1;
