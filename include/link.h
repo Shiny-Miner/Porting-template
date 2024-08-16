@@ -314,5 +314,6 @@ void CheckLinkPlayersMatchSaved(void);
 void SetLocalLinkPlayerId(u8 playerId);
 bool32 IsSendingKeysToLink(void);
 u32 GetLinkRecvQueueLength(void);
+bool8 DoesLinkPlayerCountMatchSaved(void);
 
 #endif // GUARD_LINK_H

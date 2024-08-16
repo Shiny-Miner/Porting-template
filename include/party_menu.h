@@ -169,3 +169,6 @@ u8 __attribute__((long_call)) GetItemEffectType(u16 item);
 void __attribute__((long_call)) PartyMenuModifyHP(u8 taskId, u8 slot, s8 hpIncrement, s16 hpDifference, TaskFunc task);
 
 void __attribute__((long_call)) Task_ClosePartyMenu(u8 taskId);
+
+void BufferBattlePartyCurrentOrderBySide(u8 battlerId, u8 flankId);
+extern u8 gBattlePartyCurrentOrder[PARTY_SIZE / 2];

@@ -12,4 +12,6 @@
 #define USING_MINIGAME       8
 #define USING_BATTLE_TOWER   9
 
+void Task_WaitForLinkPlayerConnection(u8 taskId);
+
 #endif //GUARD_CONSTANTS_CABLE_CLUB_H

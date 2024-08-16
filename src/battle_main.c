@@ -4554,3 +4554,38 @@ static void HandleAction_ActionFinished(void)
     gBattleScripting.multihitMoveEffect = 0;
     gBattleResources->battleScriptsStack->size = 0;
 }
+
+void BufferBattlePartyCurrentOrderBySide(u8 battlerId, u8 flankId)
+{
+    BufferBattlePartyOrderBySide(gBattleStruct->battlerPartyOrders[battlerId], flankId, battlerId);
+}
+
+bool8 DoesLinkPlayerCountMatchSaved(void)
+{
+    int i;
+    u32 count = 0;
+
+    for (i = 0; i < gSavedLinkPlayerCount; i++)
+    {
+        if (gLinkPlayers[i].trainerId == sSavedLinkPlayers[i].trainerId)
+        {
+            if (gLinkType == LINKTYPE_BATTLE_TOWER)
+            {
+                if (gLinkType == gLinkPlayers[i].linkType)
+                    count++;
+            }
+            else
+            {
+                count++;
+            }
+        }
+    }
+    if (count == gSavedLinkPlayerCount)
+    {
+        if (GetLinkPlayerCount_2() == gSavedLinkPlayerCount)
+        {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}

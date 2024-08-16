@@ -1209,3 +1209,36 @@ void BtlController_EmitEndLinkBattle(u8 bufferId, u8 battleOutcome)
     sBattleBuffersTransferData[1] = battleOutcome;
     PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 2);
 }
+
+#define tTimer data[0]
+
+void Task_WaitForLinkPlayerConnection(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    task->tTimer++;
+    if (task->tTimer > 300)
+    {
+        CloseLink();
+        SetMainCallback2(CB2_LinkError);
+        DestroyTask(taskId);
+    }
+
+    if (gReceivedRemoteLinkPlayers)
+    {
+        // Players connected, destroy task
+        if (gWirelessCommType == 0)
+        {
+            if (!DoesLinkPlayerCountMatchSaved())
+            {
+                CloseLink();
+                SetMainCallback2(CB2_LinkError);
+            }
+            DestroyTask(taskId);
+        }
+        else
+        {
+            DestroyTask(taskId);
+        }
+    }
+}

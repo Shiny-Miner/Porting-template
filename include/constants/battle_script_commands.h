@@ -30,6 +30,19 @@
 #define sMULTIPLAYER_ID gBattleScripting + 0x25
 #define sSPECIAL_TRAINER_BATTLE_TYPE gBattleScripting + 0x26
 
+//Array entries for battle communication
+#define MULTIUSE_STATE           0
+#define CURSOR_POSITION          1
+#define TASK_ID                  1
+#define SPRITES_INIT_STATE1      1
+#define SPRITES_INIT_STATE2      2
+#define MOVE_EFFECT_BYTE         3
+#define ACTIONS_CONFIRMED_COUNT  4
+#define MULTISTRING_CHOOSER      5
+#define MISS_TYPE                6
+#define MSG_DISPLAY              7
+#define BATTLE_COMMUNICATION_ENTRIES_COUNT 8
+
 #define cEFFECT_CHOOSER gBattleCommunication + 3
 #define cMULTISTRING_CHOOSER gBattleCommunication + 5
 
