@@ -1,5 +1,6 @@
 # INFO
 This code just makes your party pokemon to be shown in tm case , only for FIRE RED BINARY.
+![](test_1722248583770.png)
 
 ## Build Instructions
 
