@@ -1901,3 +1901,16 @@ SetPartyHPBarSprite = 0x8097414 | 1;
 
 gBattlePartyCurrentOrder = 0x0203b0dc;
 TryReceiveLinkBattleData = 0x0800dd28| 1;
+
+/* Battle Scripts */
+gBattleScripting = 0x02023fc4;
+gBattleScriptsForMoveEffects = 0x081d65a8;
+gBattlescriptsForBallThrow = 0x081d99b0;
+gBattlescriptsForUsingItem = 0x081d99e4;
+gBattlescriptsForRunningByItem = 0x081d99fc;
+gBattlescriptsForSafariActions = 0x081d9a04;
+gBattleScriptingCommandsTable = 0x0825011c;
+
+/* Extra Functions */
+gText_EmptyString3 = 0x083fda4c;
+gSpeciesInfo = 0x08254784;
