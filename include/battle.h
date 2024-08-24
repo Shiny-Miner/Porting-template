@@ -24,6 +24,9 @@
 #define GET_BATTLER_SIDE(battler)((GetBattlerPosition(battler) & BIT_SIDE))
 #define GET_BATTLER_SIDE2(battler)((GET_BATTLER_POSITION(battler) & BIT_SIDE))
 
+#define FLEE_ITEM    1
+#define FLEE_ABILITY 2
+
 // Used to exclude moves learned temporarily by Transform or Mimic
 #define MOVE_IS_PERMANENT(battler, moveSlot)                        \
    (!(gBattleMons[battler].status2 & STATUS2_TRANSFORMED)           \
@@ -67,6 +70,34 @@ enum {
 
 // For the second argument of GetMoveTarget, when no target override is needed
 #define NO_TARGET_OVERRIDE 0
+
+// Not really sure what a "hitmarker" is.
+#define HITMARKER_WAKE_UP_CLEAR         (1 << 4) // Cleared when waking up. Never set or checked.
+#define HITMARKER_SKIP_DMG_TRACK        (1 << 5)
+#define HITMARKER_DESTINYBOND           (1 << 6)
+#define HITMARKER_NO_ANIMATIONS         (1 << 7)
+#define HITMARKER_IGNORE_SUBSTITUTE     (1 << 8)
+#define HITMARKER_NO_ATTACKSTRING       (1 << 9)
+#define HITMARKER_ATTACKSTRING_PRINTED  (1 << 10)
+#define HITMARKER_NO_PPDEDUCT           (1 << 11)
+#define HITMARKER_SWAP_ATTACKER_TARGET  (1 << 12)
+#define HITMARKER_STATUS_ABILITY_EFFECT (1 << 13)
+#define HITMARKER_SYNCHRONISE_EFFECT    (1 << 14)
+#define HITMARKER_RUN                   (1 << 15)
+#define HITMARKER_IGNORE_ON_AIR         (1 << 16)
+#define HITMARKER_IGNORE_UNDERGROUND    (1 << 17)
+#define HITMARKER_IGNORE_UNDERWATER     (1 << 18)
+#define HITMARKER_UNABLE_TO_USE_MOVE    (1 << 19)
+#define HITMARKER_PASSIVE_DAMAGE        (1 << 20)
+#define HITMARKER_DISOBEDIENT_MOVE      (1 << 21)
+#define HITMARKER_PLAYER_FAINTED        (1 << 22)
+#define HITMARKER_ALLOW_NO_PP           (1 << 23)
+#define HITMARKER_GRUDGE                (1 << 24)
+#define HITMARKER_OBEYS                 (1 << 25)
+#define HITMARKER_NEVER_SET             (1 << 26) // Cleared as part of a large group. Never set or checked
+#define HITMARKER_CHARGING              (1 << 27)
+#define HITMARKER_FAINTED(battler)      (gBitTable[battler] << 28)
+#define HITMARKER_FAINTED2(battler)     ((1 << 28) << battler)
 
 struct TrainerMonNoItemDefaultMoves
 {
