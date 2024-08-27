@@ -1914,3 +1914,6 @@ gBattleScriptingCommandsTable = 0x0825011c;
 /* Extra Functions */
 gText_EmptyString3 = 0x083fda4c;
 gSpeciesInfo = 0x08254784;
+
+/• Mid battle evo */
+sEvoStructPtr = 02039a20 | 1;
