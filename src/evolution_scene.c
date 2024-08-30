@@ -28,6 +28,18 @@
 #include "../include/constants/pokemon.h"
 #include "../include/constants/items.h"
 
+#define tState              data[0]
+#define tPreEvoSpecies      data[1]
+#define tPostEvoSpecies     data[2]
+#define tCanStop            data[3]
+#define tBits               data[3]
+#define tLearnsFirstMove    data[4]
+#define tLearnMoveState     data[6]
+#define tLearnMoveYesState  data[7]
+#define tLearnMoveNoState   data[8]
+#define tEvoWasStopped      data[9]
+#define tPartyId            data[10]
+
 void EvolutionScene(struct Pokemon* mon, u16 postEvoSpecies, bool8 canStopEvo, u8 partyId)
 {
     u8 name[20];
