@@ -93,3 +93,78 @@ FillBgTilemapBufferRect_Palette0(1, 0x100, 10, sStorage->partyMenuY, 12, PARTY_M
     }
     return FALSE;
 }
+
+static void SpriteCB_BoxMonIconScrollIn(struct Sprite *sprite)
+{
+    if (sprite->sDistance != 0)
+    {
+        // Icon moving
+sprite->sDistance -= BOX_SCROLL_SPEED_FACTOR;
+        sprite->x += sprite->sSpeed;
+    }
+    else
+      {
+        // Icon arrived
+        sStorage->iconScrollNumIncoming--;
+        sprite->x = sprite->sScrollInDestX;
+        sprite->callback = SpriteCallbackDummy;
+    }
+}
+
+static void DestroyAllBoxMonIcons(void)
+{
+    u32 boxPosition;
+    for (boxPosition = 0; boxPosition < IN_BOX_ROWS * IN_BOX_COLUMNS; boxPosition++) {
+        if (sStorage->boxMonsSprites[boxPosition] != NULL) {
+            DestroyBoxMonIcon(sStorage->boxMonsSprites[boxPosition]);
+            sStorage->boxMonsSprites[boxPosition] = NULL;
+        }
+    }
+}
+
+static u8 CreateBoxMonIconsInColumn(u8 column, u16 distance, s16 speed)
+{
+    s32 i;
+    u16 y = 44;
+    s16 xDest = 8 * (3 * column) + 100;
+s32 speedSign = (speed >= 0) ? 1 : -1;
+    u16 x = xDest - ((distance + BOX_SCROLL_SPEED_FACTOR ) * speedSign * 6);
+}
+
+static void InitBoxMonIconScroll(u8 boxId, s8 direction)
+{
+    sStorage->iconScrollState = 0;
+    sStorage->iconScrollToBoxId = boxId;
+    sStorage->iconScrollDirection = direction;
+    sStorage->iconScrollDistance = 32;
+sStorage->iconScrollSpeed = -BOX_SCROLL_SPEED(direction);
+    sStorage->iconScrollNumIncoming = 0;
+    GetIncomingBoxMonData(boxId);
+    if (direction > 0)
+        sStorage->iconScrollCurColumn = 0;
+    else
+        sStorage->iconScrollCurColumn = IN_BOX_COLUMNS - 1;
+    sStorage->iconScrollPos = (24 * sStorage->iconScrollCurColumn) + 100;
+    StartBoxMonIconsScrollOut(sStorage->iconScrollSpeed);
+}
+
+static bool32 InstantBoxMonIconScroll(u32 boxId)
+{
+    switch (sStorage->iconScrollState) {
+    case 0:
+        DestroyAllBoxMonIcons();
+        sStorage->iconScrollState++;
+        break;
+    case 1:
+        InitBoxMonSprites(boxId);
+        sStorage->bg2_X += sStorage->scrollSpeed * sStorage->scrollTimer;
+        sStorage->iconScrollState++;
+        break;
+    case 2:
+        sStorage->iconScrollDistance = 0;
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
