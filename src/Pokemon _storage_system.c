@@ -168,3 +168,8 @@ static bool32 InstantBoxMonIconScroll(u32 boxId)
     return TRUE;
 }
 
+static bool8 UpdateBoxMonIconScroll(void)
+{
+  if (sStorage->iconScrollDistance >= 0) {
+        sStorage->iconScrollDistance = max(sStorage->iconScrollDistance - BOX_SCROLL_SPEED_FACTOR, 0);
+}
