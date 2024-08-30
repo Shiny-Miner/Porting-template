@@ -1,0 +1,16 @@
+#include "../include/script.h"
+#include "../include/sound.h"
+#include "../include/string_util.h"
+#include "../include/strings.h"
+#include "../include/text.h"
+#include "../include/text_window.h"
+#include "../include/trig.h"
+#include "../include/walda_phrase.h"
+#include "../include/window.h"
+#include "../include/constants/items.h"
+#include "../include/constants/moves.h"
+#include "../include/constants/rgb.h"
+#include "../include/constants/songs.h"
+#include "../include/constants/pokemon_icon.h"
+gKeyRepeatContinueDelay = 3;
+gKeyRepeatStartDelay = 30;
