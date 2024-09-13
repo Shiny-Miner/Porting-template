@@ -174,7 +174,6 @@
 #define EC_WORD_CHLOROPHYLL   (EC_GROUP_STATUS << 9) | 0x6a
 #define EC_WORD_PURE_POWER    (EC_GROUP_STATUS << 9) | 0x6b
 #define EC_WORD_SHIELD_DUST   (EC_GROUP_STATUS << 9) | 0x6c
-#define EC_NUM_OF_STATUS       0x6d
 
 // BATTLE
 #define EC_WORD_MATCH_UP     (EC_GROUP_BATTLE << 9) | 0x0
@@ -240,7 +239,6 @@
 #define EC_WORD_LEADER       (EC_GROUP_BATTLE << 9) | 0x3c
 #define EC_WORD_RULE         (EC_GROUP_BATTLE << 9) | 0x3d
 #define EC_WORD_MOVE         (EC_GROUP_BATTLE << 9) | 0x3e
-#define EC_NUM_OF_BATTLE     0x3f
 
 // GREETINGS
 #define EC_WORD_THANKS          (EC_GROUP_GREETINGS << 9) | 0x0
@@ -285,7 +283,6 @@
 #define EC_WORD_YO              (EC_GROUP_GREETINGS << 9) | 0x27
 #define EC_WORD_COME_OVER       (EC_GROUP_GREETINGS << 9) | 0x28
 #define EC_WORD_COUNT_ON        (EC_GROUP_GREETINGS << 9) | 0x29
-#define EC_NUM_OF_GREETINGS     0x2A
 
 // PEOPLE
 #define EC_WORD_OPPONENT     (EC_GROUP_PEOPLE << 9) | 0x0
@@ -428,7 +425,6 @@
 #define EC_WORD_WOWEE                       (EC_GROUP_VOICES << 9) | 0x3c
 #define EC_WORD_GWAH                        (EC_GROUP_VOICES << 9) | 0x3d
 #define EC_WORD_WAHAHAHA                    (EC_GROUP_VOICES << 9) | 0x3e
-#define EC_NUM_VOICES                       0x3f
 
 // SPEECH
 #define EC_WORD_LISTEN      (EC_GROUP_SPEECH << 9) | 0x0
@@ -491,7 +487,6 @@
 #define EC_WORD_ANY         (EC_GROUP_SPEECH << 9) | 0x39
 #define EC_WORD_INSTEAD     (EC_GROUP_SPEECH << 9) | 0x3a
 #define EC_WORD_FANTASTIC   (EC_GROUP_SPEECH << 9) | 0x3b
-#define EC_NUM_OF_SPEECH    0x3c
 
 // ENDINGS
 #define EC_WORD_WILL           (EC_GROUP_ENDINGS << 9) | 0x0
@@ -563,7 +558,6 @@
 #define EC_WORD_THAN           (EC_GROUP_ENDINGS << 9) | 0x42
 #define EC_WORD_ONCE           (EC_GROUP_ENDINGS << 9) | 0x43
 #define EC_WORD_ANYWHERE       (EC_GROUP_ENDINGS << 9) | 0x44
-#define EC_NUM_OF_ENDINGS      0x45
 
 // FEELINGS
 #define EC_WORD_MEET          (EC_GROUP_FEELINGS << 9) | 0x0
@@ -786,7 +780,6 @@
 #define EC_WORD_APPEARS    (EC_GROUP_ACTIONS << 9) | 0x4b
 #define EC_WORD_FAINT      (EC_GROUP_ACTIONS << 9) | 0x4c
 #define EC_WORD_FAINTED    (EC_GROUP_ACTIONS << 9) | 0x4d
-#define EC_NUM_OF_ACTIONS  0x4e
 
 // LIFESTYLE
 #define EC_WORD_CHORES        (EC_GROUP_LIFESTYLE << 9) | 0x0

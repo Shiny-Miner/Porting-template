@@ -1,6 +1,69 @@
 #ifndef GUARD_BG_H
 #define GUARD_BG_H
 
+#include "global.h"
+
+struct BGCntrlBitfield // for the I/O registers
+{
+    volatile u16 priority:2;
+    volatile u16 charBaseBlock:2;
+    volatile u16 field_0_2:4;
+    volatile u16 field_1_0:5;
+    volatile u16 areaOverflowMode:1;
+    volatile u16 screenSize:2;
+};
+
+enum
+{
+    BG_CTRL_ATTR_VISIBLE = 1,
+    BG_CTRL_ATTR_CHARBASEINDEX = 2,
+    BG_CTRL_ATTR_MAPBASEINDEX = 3,
+    BG_CTRL_ATTR_SCREENSIZE = 4,
+    BG_CTRL_ATTR_PALETTEMODE = 5,
+    BG_CTRL_ATTR_PRIORITY = 6,
+    BG_CTRL_ATTR_MOSAIC = 7,
+    BG_CTRL_ATTR_WRAPAROUND = 8,
+};
+
+enum
+{
+    BG_ATTR_CHARBASEINDEX = 1,
+    BG_ATTR_MAPBASEINDEX = 2,
+    BG_ATTR_SCREENSIZE = 3,
+    BG_ATTR_PALETTEMODE = 4,
+    BG_ATTR_MOSAIC = 5,
+    BG_ATTR_WRAPAROUND = 6,
+    BG_ATTR_PRIORITY = 7,
+    BG_ATTR_MAPSIZE = 8,
+    BG_ATTR_BGTYPE = 9,
+    BG_ATTR_BASETILE = 10
+};
+
+// Modes for ChangeBgX / ChangeBgY
+enum {
+    BG_COORD_SET,
+    BG_COORD_ADD,
+    BG_COORD_SUB,
+};
+
+enum AdjustBgMosaicMode
+{
+    BG_MOSAIC_SET,
+    BG_MOSAIC_SET_H,
+    BG_MOSAIC_INC_H,
+    BG_MOSAIC_DEC_H,
+    BG_MOSAIC_SET_V,
+    BG_MOSAIC_INC_V,
+    BG_MOSAIC_DEC_V,
+};
+
+enum BgTileAllocMode
+{
+    BG_TILE_FIND_FREE_SPACE,
+    BG_TILE_ALLOC,
+    BG_TILE_FREE,
+};
+
 struct BgTemplate
 {
     u16 bg:2;                   // 0x1, 0x2 -> 0x3
@@ -12,163 +75,54 @@ struct BgTemplate
     u16 baseTile:10;
 };
 
-#define MAX_RAIN_SPRITES             24
-#define NUM_CLOUD_SPRITES            3
-#define NUM_FOG_HORIZONTAL_SPRITES   20
-#define NUM_ASH_SPRITES              20
-#define NUM_FOG_DIAGONAL_SPRITES     20
-#define NUM_SANDSTORM_SPRITES        20
-#define NUM_SWIRL_SANDSTORM_SPRITES  5
-
-// Controls how the weather should be changing the screen palettes.
-#define WEATHER_PAL_STATE_CHANGING_WEATHER   0
-#define WEATHER_PAL_STATE_SCREEN_FADING_IN   1
-#define WEATHER_PAL_STATE_SCREEN_FADING_OUT  2
-#define WEATHER_PAL_STATE_IDLE               3
-
-// Modes for FadeScreen
-#define FADE_FROM_BLACK  0
-#define FADE_TO_BLACK    1
-#define FADE_FROM_WHITE  2
-#define FADE_TO_WHITE    3
-
-struct Weather
-{
-    union
-    {
-        struct
-        {
-            struct Sprite *rainSprites[MAX_RAIN_SPRITES];
-            struct Sprite *snowflakeSprites[101];
-            struct Sprite *cloudSprites[NUM_CLOUD_SPRITES];
-        } s1;
-        struct
-        {
-            u8 filler0[0xA0];
-            struct Sprite *fogHSprites[NUM_FOG_HORIZONTAL_SPRITES];
-            struct Sprite *ashSprites[NUM_ASH_SPRITES];
-            struct Sprite *fogDSprites[NUM_FOG_DIAGONAL_SPRITES];
-            struct Sprite *sandstormSprites1[NUM_SANDSTORM_SPRITES];
-            struct Sprite *sandstormSprites2[NUM_SWIRL_SANDSTORM_SPRITES];
-        } s2;
-    } sprites;
-    u8 gammaShifts[19][32];
-    u8 altGammaShifts[19][32];
-    s8 gammaIndex;
-    s8 gammaTargetIndex;
-    u8 gammaStepDelay;
-    u8 gammaStepFrameCounter;
-    u16 fadeDestColor;
-    u8 palProcessingState;
-    u8 fadeScreenCounter;
-    bool8 readyForInit;
-    u8 taskId;
-    u8 fadeInActive;
-    u8 fadeInCounter;
-    u16 initStep;
-    u16 finishStep;
-    u8 currWeather;
-    u8 nextWeather;
-    u8 weatherGfxLoaded;
-    bool8 weatherChangeComplete;
-    u8 weatherPicSpritePalIndex;
-    u8 altGammaSpritePalIndex;
-    u16 rainSpriteVisibleCounter;
-    u8 curRainSpriteIndex;
-    u8 targetRainSpriteCount;
-    u8 rainSpriteCount;
-    u8 rainSpriteVisibleDelay;
-    u8 isDownpour;
-    u8 rainStrength;
-    bool8 cloudSpritesCreated;
-    u16 snowflakeVisibleCounter;
-    u16 snowflakeTimer;
-    u8 snowflakeSpriteCount;
-    u8 targetSnowflakeSpriteCount;
-    u16 thunderDelay;
-    u16 thunderCounter;
-    bool8 thunderAllowEnd;
-    bool8 thunderSkipShort;
-    u8 thunderShortRetries;
-    bool8 thunderTriggered;
-    u16 fogHScrollPosX;
-    u16 fogHScrollCounter;
-    u16 fogHScrollOffset;
-    u8 lightenedFogSpritePals[6];
-    u8 lightenedFogSpritePalsCount;
-    bool8 fogHSpritesCreated;
-    u16 ashBaseSpritesX;
-    u16 ashUnused;
-    bool8 ashSpritesCreated;
-    u32 sandstormXOffset;
-    u32 sandstormYOffset;
-    u8 filler_70C[2];
-    u16 sandstormBaseSpritesX;
-    u16 sandstormPosY;
-    u16 sandstormWaveIndex;
-    u16 sandstormWaveCounter;
-    bool8 sandstormSpritesCreated;
-    bool8 sandstormSwirlSpritesCreated;
-    u16 fogDBaseSpritesX;
-    u16 fogDPosY;
-    u16 fogDScrollXCounter;
-    u16 fogDScrollYCounter;
-    u16 fogDXOffset;
-    u16 fogDYOffset;
-    bool8 fogDSpritesCreated;
-    u16 bubblesDelayCounter;
-    u16 bubblesDelayIndex;
-    u16 bubblesCoordsIndex;
-    u16 bubblesSpriteCount;
-    bool8 bubblesSpritesCreated;
-    u16 currBlendEVA;
-    u16 currBlendEVB;
-    u16 targetBlendEVA;
-    u16 targetBlendEVB;
-    u8 blendUpdateCounter;
-    u8 blendFrameCounter;
-    u8 blendDelay;
-    s16 droughtBrightnessStage;
-    s16 droughtLastBrightnessStage;
-    s16 droughtTimer;
-    s16 droughtState;
-    u8 filler_744[0xD-4];
-    s8 loadDroughtPalsIndex;
-    u8 loadDroughtPalsOffset;
-};
-
-extern struct Weather *const gWeatherPtr;
-
-void ResetBgsAndClearDma3BusyFlags(u32 leftoverFireRedLeafGreenVariable);
+void ResetBgs(void);
+u8 GetBgMode(void);
+void ResetBgControlStructs(void);
+void Unused_ResetBgControlStruct(u8 bg);
+void SetBgControlAttributes(u8 bg, u8 charBaseIndex, u8 mapBaseIndex, u8 screenSize, u8 paletteMode, u8 priority, u8 mosaic, u8 wraparound);
+u16 GetBgControlAttribute(u8 bg, u8 attributeId);
+u8 LoadBgVram(u8 bg, const void *src, u16 size, u16 destOffset, u8 mode);
+void SetTextModeAndHideBgs(void);
+bool8 IsInvalidBg(u8 bg);
+int BgTileAllocOp(int bg, int offset, int count, int mode);
+void ResetBgsAndClearDma3BusyFlags(bool32 enableWindowTileAutoAlloc);
 void InitBgsFromTemplates(u8 bgMode, const struct BgTemplate *templates, u8 numTemplates);
+void InitBgFromTemplate(const struct BgTemplate *template);
+void SetBgMode(u8 bgMode);
+u16 LoadBgTiles(u8 bg, const void *src, u16 size, u16 destOffset);
+u16 LoadBgTilemap(u8 bg, const void *src, u16 size, u16 destOffset);
+u16 Unused_LoadBgPalette(u8 bg, const void *src, u16 size, u16 destOffset);
 bool8 IsDma3ManagerBusyWithBgCopy(void);
 void ShowBg(u8 bg);
+void HideBg(u8 bg);
+void SetBgAttribute(u8 bg, u8 attributeId, u8 value);
+u16 GetBgAttribute(u8 bg, u8 attributeId);
+u32 ChangeBgX(u8 bg, u32 value, u8 op);
+u32 GetBgX(u8 bg);
+u32 ChangeBgY(u8 bg, u32 value, u8 op);
+u32 ChangeBgY_ScreenOff(u8 bg, u32 value, u8 op);
+u32 GetBgY(u8 bg);
+void SetBgAffine(u8 bg, u32 srcCenterX, u32 srcCenterY, s16 dispCenterX, s16 dispCenterY, s16 scaleX, s16 scaleY, u16 rotationAngle);
+u8 AdjustBgMosaic(u8 value, u8 mode);
 void SetBgTilemapBuffer(u8 bg, void *tilemap);
+void UnsetBgTilemapBuffer(u8 bg);
+void *GetBgTilemapBuffer(u8 bg);
+void CopyToBgTilemapBuffer(u8 bg, const void *src, u16 mode, u16 destOffset);
 void CopyBgTilemapBufferToVram(u8 bg);
+void CopyToBgTilemapBufferRect(u8 bg, const void *src, u8 destX, u8 destY, u8 width, u8 height);
+void CopyToBgTilemapBufferRect_ChangePalette(u8 bg, const void *src, u8 destX, u8 destY, u8 rectWidth, u8 rectHeight, u8 palette);
+void CopyRectToBgTilemapBufferRect(u8 bg, const void *src, u8 srcX, u8 srcY, u8 srcWidth, u8 srcHeight, u8 destX, u8 destY, u8 rectWidth, u8 rectHeight, u8 palette1, s16 tileOffset, s16 palette2);
+void FillBgTilemapBufferRect_Palette0(u8 bg, u16 tileNum, u8 x, u8 y, u8 width, u8 height);
+void FillBgTilemapBufferRect(u8 bg, u16 tileNum, u8 x, u8 y, u8 width, u8 height, u8 palette);
+void WriteSequenceToBgTilemapBuffer(u8 bg, u16 firstTileNum, u8 x, u8 y, u8 width, u8 height, u8 paletteSlot, s16 tileNumDelta);
+u16 GetBgMetricTextMode(u8 bg, u8 whichMetric);
+u32 GetBgMetricAffineMode(u8 bg, u8 whichMetric);
+u32 GetTileMapIndexFromCoords(s32 x, s32 y, s32 screenSize, u32 screenWidth, u32 screenHeight);
+void CopyTileMapEntry(const u16 *src, u16 *dest, s32 palette1, s32 tileOffset, s32 palette2);
+u32 GetBgType(u8 bg);
+bool32 IsInvalidBg32(u8 bg);
+bool32 IsTileMapOutsideWram(u8 bg);
 
-#define WEATHER_NONE               0
-#define WEATHER_SUNNY_CLOUDS       1   // unused
-#define WEATHER_SUNNY              2
-#define WEATHER_RAIN               3   // unused
-#define WEATHER_SNOW               4   // unused
-#define WEATHER_RAIN_THUNDERSTORM  5   // unused
-#define WEATHER_FOG_HORIZONTAL     6
-#define WEATHER_VOLCANIC_ASH       7   // unused
-#define WEATHER_SANDSTORM          8   // unused
-#define WEATHER_FOG_DIAGONAL       9   // unused
-#define WEATHER_UNDERWATER         10  // unused
-#define WEATHER_SHADE              11
-#define WEATHER_DROUGHT            12  // unused and broken in overworld
-#define WEATHER_DOWNPOUR           13  // unused
-#define WEATHER_UNDERWATER_BUBBLES 14  // unused
-#define WEATHER_ABNORMAL           15  // unused
-#define WEATHER_ROUTE119_CYCLE     20  // unused
-#define WEATHER_ROUTE123_CYCLE     21  // unused
-
-#define PLTT_ID(n) ((n) * 16)
-
-#define PLTT_SIZEOF(n) ((n) * sizeof(u16))
-#define PLTT_SIZE_4BPP PLTT_SIZEOF(16)
-#define PLTT_SIZE_8BPP PLTT_SIZEOF(256)
+extern bool32 gWindowTileAutoAllocEnabled;
 
 #endif // GUARD_BG_H
