@@ -1,10 +1,13 @@
-## Template
+## About
 
-This template currently builds no code, but has many functions declared and ready to use that aren't very specific to any one application.  Each new branch for code that is inserted into Fire Gold will be based on this branch.
+This code allows your Pokémon to evolve during a battle.
+![Mid_battle_evo_pokefr](https://github.com/user-attachments/assets/12e74e8f-0719-4c39-a64c-3149fceda257)
 
 ### Build Instructions
 
-Build the same as the CFRU:  `python scripts/make.py`
+You must have `DevkitARM` and `Python 3.7` in your `PATH` variable. `Python 3.8` or higher willn't work!
+
+Run the following command:  `python scripts/make.py`
 
 #### Cloning the repo
 
@@ -49,8 +52,6 @@ This won't actually modify `BPRE0.gba`, instead your output will be in `test.gba
 
 ### Credits
 
-Research made possible by [pokeemerald](https://github.com/pret/pokeemerald) and [pokefirered](https://github.com/pret/pokefirered).
-
-Spherical Ice initially made the [Unown Report code](https://github.com/sphericalice/bpre-unown-report).  I forked it and ported it to the [CFRU's build system](https://github.com/BluRosie/bpre-unown-report).
+This code was ported from [CtrlFootPrint's pokeemerald](https://github.com/CtrlFootPrint/pokeemerald/tree/MidBattleEvo).
 
 Skeli made the [build system used in the CFRU](https://github.com/Skeli789/Complete-Fire-Red-Upgrade) which is used here.
