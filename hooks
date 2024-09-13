@@ -1,2 +1,6 @@
-#examples:
-#SetTradedMonPokedexFlags 080507A0 1
+## Intial commit
+BattleTurnPassed 08013BD4 0
+EvolutionScene 080CDDF4 4
+Task_EvolutionScene 080CE8DC 1
+CopyPlayerPartyMonToBattleData 080410B8 3
+PokemonUseItemEffects 080413E4 5
