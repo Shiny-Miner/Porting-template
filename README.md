@@ -1,3 +1,7 @@
+## Warning
+
+There's some bugs related to level up, i recommend to don't use this code until these bugs get fixed.
+
 ## About
 
 This code allows your Pokémon to evolve during a battle.
