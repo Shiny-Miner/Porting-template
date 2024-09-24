@@ -1,6 +1,6 @@
 # INFO
 This code just makes your pc 8tem ztorage Swsh styled.
-
+![](1636_-_Pokemon_Fire_Red_USquirrels_1648130502889.png)
 ## Build Instructions
 
 Build the same as the CFRU:  `python scripts/make.py`
