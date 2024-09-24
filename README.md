@@ -1,5 +1,5 @@
 # INFO
-This code just makes your party pokemon to be shown in tm case , only for FIRE RED BINARY.
+This code just makes your pc 8tem ztorage Swsh styled.
 
 ## Build Instructions
 
