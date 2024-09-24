@@ -1,5 +1,5 @@
 # INFO
-This code just makes your pc 8tem ztorage Swsh styled.
+This code just makes your pc item storage Swsh styled.
 ![](1636_-_Pokemon_Fire_Red_USquirrels_1648130502889.png)
 ## Build Instructions
 
