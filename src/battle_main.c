@@ -65,10 +65,6 @@ static void PlayerTryEvolution(void);
 static void WaitForEvolutionThenTryAnother(void);
 static void CB2_SetUpReshowBattleScreenAfterEvolution(void);
 
-EWRAM_DATA bool8 gPlayerDoesNotWantToEvolveLeft = FALSE;
-EWRAM_DATA bool8 gPlayerDoesNotWantToEvolveRight = FALSE;
-EWRAM_DATA u8 gBattleTerrainBackup = 0;
-
 // Rewrited function
 void BattleTurnPassed(void)
 {
