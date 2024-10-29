@@ -2001,3 +2001,7 @@ gPotentialItemEffectBattler = 0x02023d6f;
 gSaveBlock1Ptr = 0x03005008;
 gItemEffectTable = 0x082528bc;
 gPPUpGetMask = 0x0825dea1;
+
+gPlayerDoesNotWantToEvolveLeft = 0x203ab00;
+gPlayerDoesNotWantToEvolveRight = 0x203ab02;
+gBattleTerrainBackup = 0x203ab04;
