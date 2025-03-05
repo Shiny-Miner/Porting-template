@@ -1,5 +1,7 @@
-# INFO
-This code just makes your party pokemon to be shown in tm case , only for FIRE RED BINARY.
+# Save in game by R button!
+This code is a trademark of Zeturic. It was not compiling so i put it on to my repo. It fully usable and cool!
+Credit me and Zeturic if used!
+<video controls src="save-1.mp4" title="Title"></video>
 
 ## Build Instructions
 
