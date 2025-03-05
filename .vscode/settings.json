@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "new_menu_helpers.h": "c",
+        "link.h": "c",
+        "start_menu.h": "c"
+    }
+}
