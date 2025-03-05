@@ -2,7 +2,11 @@
 This code is a trademark of Zeturic. It was not compiling so i put it on to my repo. It fully usable and cool!
 Credit me and Zeturic if used!
 
+<<<<<<< HEAD
 
+=======
+<video controls src="save-1.mp4" title="Title"></video>
+>>>>>>> 9e6ea36fe05f7ab47060a34c0866a4014f3742c6
 
 ## Build Instructions
 
