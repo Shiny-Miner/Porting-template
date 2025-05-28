@@ -2,6 +2,7 @@
 
 #include "../global.h"
 #include "../../src/config.h"
+#include "../constants/items.h"
 
 /**
  * \file item.h
@@ -207,3 +208,5 @@ enum ItemType //Sorted in this order
 	ITEM_TYPE_DRIVE,
 	ITEM_TYPE_MAIL,
 };
+
+extern const u32 *const gItemGraphicsTable[ITEMS_COUNT + 1][2];

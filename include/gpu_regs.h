@@ -1,5 +1,4 @@
-#ifndef GUARD_GPU_REGS_H
-#define GUARD_GPU_REGS_H
+#pragma once
 
 #include "global.h"
 
@@ -8,12 +7,15 @@
 // Exported RAM declarations
 
 // Exported ROM declarations
+u16 __attribute__((long_call)) GetGpuReg(u8 regOffset);
+void __attribute__((long_call)) SetGpuReg(u8 regOffset, u16 value);
+void __attribute__((long_call)) ClearGpuRegBits(u8 regOffset, u16 mask);
+void __attribute__((long_call)) SetGpuRegBits(u8 regOffset, u16 mask);
+
+/*
 void InitGpuRegManager(void);
 void CopyBufferedValuesToGpuRegs(void);
-void SetGpuReg(u8 regOffset, u16 value);
 void SetGpuReg_ForcedBlank(u8 regOffset, u16 value);
-u16 GetGpuReg(u8 regOffset);
-void SetGpuRegBits(u8 regOffset, u16 mask);
-void ClearGpuRegBits(u8 regOffset, u16 mask);
-
-#endif //GUARD_GPU_REGS_H
+void EnableInterrupts(u16 mask);
+void DisableInterrupts(u16 mask);
+*/

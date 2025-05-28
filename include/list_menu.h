@@ -1,6 +1,4 @@
-#ifndef GUARD_LIST_MENU_H
-#define GUARD_LIST_MENU_H
-
+#pragma once
 #include "global.h"
 #include "window.h"
 
@@ -17,44 +15,24 @@ enum
     SCROLL_ARROW_LEFT,
     SCROLL_ARROW_RIGHT,
     SCROLL_ARROW_UP,
-    SCROLL_ARROW_DOWN,
-};
-
-struct ListMenuItem
-{
-    const u8 *label;
-    u32 index;
+    SCROLL_ARROW_DOWN
 };
 
 struct ListMenu;
 
-// For ListMenuGet/SetTemplateField
-enum ListMenuFields
+struct ListMenuItem
 {
-    LISTFIELD_MOVECURSORFUNC = 0,
-    LISTFIELD_MOVECURSORFUNC2,
-    LISTFIELD_TOTALITEMS,
-    LISTFIELD_MAXSHOWED,
-    LISTFIELD_WINDOWID,
-    LISTFIELD_HEADERX,
-    LISTFIELD_ITEMX,
-    LISTFIELD_CURSORX,
-    LISTFIELD_UPTEXTY,
-    LISTFIELD_CURSORPAL,
-    LISTFIELD_FILLVALUE,
-    LISTFIELD_CURSORSHADOWPAL,
-    LISTFIELD_LETTERSPACING,
-    LISTFIELD_ITEMVERTICALPADDING,
-    LISTFIELD_SCROLLMULTIPLE,
-    LISTFIELD_FONTID,
-    LISTFIELD_CURSORKIND,
+    const u8* name;
+    s32 id;
 };
+
+extern struct ListMenuItem gMultiChoice[7];
 
 struct ListMenuTemplate
 {
     /*0x00*/ const struct ListMenuItem *items;
     /*0x04*/ void (* moveCursorFunc)(s32 itemIndex, bool8 onInit, struct ListMenu *list);
-    /*0x08*/ void (* itemPrintFunc)(u8 windowId, u32 itemId, u8 y);
+    /*0x08*/ void (* itemPrintFunc)(u8 windowId, s32 itemId, u8 y);
     /*0x0C*/ u16 totalItems;
     /*0x0E*/ u16 maxShowed;
     /*0x10*/ u8 windowId;
@@ -92,18 +70,53 @@ struct ListMenuWindowRect
     u8 palNum;
 };
 
-extern struct ListMenuTemplate gMultiuseListMenuTemplate;
+struct ScrollArrowsTemplate
+{
+    u8 firstArrowType;
+    u8 firstX;
+    u8 firstY;
+    u8 secondArrowType;
+    u8 secondX;
+    u8 secondY;
+    u16 fullyUpThreshold;
+    u16 fullyDownThreshold;
+    u16 tileTag;
+    u16 palTag;
+    u8 palNum;
+};
 
-u32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 arg2, u16 tileNum, u16 palNum);
-u8 ListMenuInit(const struct ListMenuTemplate *listMenuTemplate, u16 cursorPos, u16 itemsAbove);
-u8 ListMenuInitInRect(const struct ListMenuTemplate *listMenuTemplate, const struct ListMenuWindowRect *rect, u16 cursorPos, u16 itemsAbove);
-s32 ListMenu_ProcessInput(u8 listTaskId);
-void DestroyListMenuTask(u8 listTaskId, u16 *cursorPos, u16 *itemsAbove);
-void RedrawListMenu(u8 listTaskId);
-void ListMenuGetScrollAndRow(u8 listTaskId, u16 *cursorPos, u16 *itemsAbove);
-u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId);
-void ListMenuOverrideSetColors(u8 cursorPal, u8 fillValue, u8 cursorShadowPal);
-void ListMenuDefaultCursorMoveFunc(s32 itemIndex, bool8 onInit, struct ListMenu *list);
-void ListMenuSetTemplateField(u8 taskId, u8 field, s32 value);
+struct CursorStruct
+{
+    u8 left;
+    u8 top;
+    u16 rowWidth;
+    u16 rowHeight;
+    u16 tileTag;
+    u16 palTag;
+    u8 palNum;
+};
 
-#endif //GUARD_LIST_MENU_H
+extern struct ScrollArrowsTemplate gTempScrollArrowTemplate;
+//extern struct ListMenuTemplate gMultiuseListMenuTemplate;
+
+// Exported ROM declarations
+s32 __attribute__((long_call)) DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 arg2, u16 tileNum, u16 palNum);
+u8 __attribute__((long_call)) ListMenuInit(const struct ListMenuTemplate *listMenuTemplate, u16 cursorPos, u16 itemsAbove);
+u8 __attribute__((long_call)) ListMenuInitInRect(struct ListMenuTemplate *listMenuTemplate, struct ListMenuWindowRect *arg1, u16 scrollOffset, u16 selectedRow);
+s32 __attribute__((long_call)) ListMenu_ProcessInput(u8 listTaskId);
+void __attribute__((long_call)) DestroyListMenuTask(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow);
+void __attribute__((long_call)) RedrawListMenu(u8 listTaskId);
+void __attribute__((long_call)) ChangeListMenuPals(u8 listTaskId, u8 cursorPal, u8 fillValue, u8 cursorShadowPal);
+void __attribute__((long_call)) ChangeListMenuCoords(u8 listTaskId, u8 x, u8 y);
+s32 __attribute__((long_call)) ListMenuTestInput(struct ListMenuTemplate *template, u32 scrollOffset, u32 selectedRow, u16 keys, u16 *newScrollOffset, u16 *newSelectedRow);
+void __attribute__((long_call)) ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *arrayId);
+void __attribute__((long_call)) ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow);
+u16 __attribute__((long_call)) ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId);
+void __attribute__((long_call)) ListMenuOverrideSetColors(u8 cursorPal, u8 fillValue, u8 cursorShadowPal);
+void __attribute__((long_call)) ListMenuDefaultCursorMoveFunc(s32 arg0, u8 arg1, struct ListMenu *list);
+s32 __attribute__((long_call)) ListMenuGetUnkIndicatorsStructFields(u8 taskId, u8 field);
+void __attribute__((long_call)) ListMenuSetUnkIndicatorsStructField(u8 taskId, u8 field, s32 value);
+u8 __attribute__((long_call)) AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *arrowInfo, u16 *arg1);
+u8 __attribute__((long_call)) AddScrollIndicatorArrowPairParameterized(u32 arrowType, s32 commonPos, s32 firstPos, s32 secondPos, s32 fullyDownThreshold, s32 tileTag, s32 palTag, u16 *currItemPtr);
+void __attribute__((long_call)) RemoveScrollIndicatorArrowPair(u8 taskId);
+void __attribute__((long_call)) Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId);

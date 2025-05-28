@@ -10,13 +10,13 @@
 #define AGBPrintFlush()
 #define AGBAssert(pFile, nLine, pExpression, nStopProgram)
 #else
-void AGBPrintInit(void);
-void AGBPutc(const char cChr);
-void AGBPrint(const char *pBuf);
-void AGBPrintf(const char *pBuf, ...);
-void AGBPrintFlush1Block(void);
-void AGBPrintFlush(void);
-void AGBAssert(const char *pFile, int nLine, const char *pExpression, int nStopProgram);
+void __attribute__((long_call)) AGBPrintInit(void);
+void __attribute__((long_call)) AGBPutc(const char cChr);
+void __attribute__((long_call)) AGBPrint(const char *pBuf);
+void __attribute__((long_call)) AGBPrintf(const char *pBuf, ...);
+void __attribute__((long_call)) AGBPrintFlush1Block(void);
+void __attribute__((long_call)) AGBPrintFlush(void);
+void __attribute__((long_call)) AGBAssert(const char *pFile, int nLine, const char *pExpression, int nStopProgram);
 #endif
 
 #undef AGB_ASSERT
@@ -35,10 +35,6 @@ void AGBAssert(const char *pFile, int nLine, const char *pExpression, int nStopP
 
 // for matching purposes
 
-#if MODERN
-#define AGB_ASSERT_EX(exp, file, line) AGB_ASSERT(exp)
-#define AGB_WARNING_EX(exp, file, line) AGB_WARNING(exp)
-#else
 #ifdef NDEBUG
 #define	AGB_ASSERT_EX(exp, file, line)
 #else
@@ -49,7 +45,6 @@ void AGBAssert(const char *pFile, int nLine, const char *pExpression, int nStopP
 #define	AGB_WARNING_EX(exp, file, line)
 #else
 #define	AGB_WARNING_EX(exp, file, line) (exp) ? ((void*)0) : AGBAssert(file, line, #exp, 0);
-#endif
 #endif
 
 #endif // GUARD_GBA_ISAGBPRINT_H

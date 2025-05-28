@@ -1,5 +1,4 @@
-#ifndef GUARD_GBA_TYPES_H
-#define GUARD_GBA_TYPES_H
+#pragma once
 
 #include <stdint.h>
 
@@ -27,6 +26,14 @@ typedef double f64;
 typedef u8  bool8;
 typedef u16 bool16;
 typedef u32 bool32;
+
+typedef u16 species_t;
+typedef u16 move_t;
+typedef u8  ability_t;
+typedef u16 item_t;
+typedef u8  item_effect_t;
+typedef u8  bank_t;
+typedef u8  move_effect_t;
 
 struct BgCnt
 {
@@ -165,5 +172,3 @@ struct SioMultiCnt
 #define ST_SIO_38400_BPS  1 //  38400 bps
 #define ST_SIO_57600_BPS  2 //  57600 bps
 #define ST_SIO_115200_BPS 3 // 115200 bps
-
-#endif // GUARD_GBA_TYPES_H

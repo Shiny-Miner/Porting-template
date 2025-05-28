@@ -1,13 +1,14 @@
 #ifndef GUARD_MAIN_H
 #define GUARD_MAIN_H
 
-typedef void (*MainCallback)(void);
-typedef void (*IntrCallback)(void);
-typedef void (*IntrFunc)(void);
+#include "global.h"
 
 #include "global.h"
 
-extern IntrFunc gIntrTable[];
+typedef void (*MainCallback)(void);
+typedef void (*IntrCallback)(void);
+typedef void (*IntrFunc)(void);
+typedef void (*EraseFlash)(u16);
 
 struct Main
 {
@@ -52,27 +53,18 @@ extern bool8 gLinkVSyncDisabled;
 extern const u8 gGameVersion;
 extern const u8 gGameLanguage;
 
+void __attribute__((long_call)) DoSoftReset(void);
+void __attribute__((long_call)) SetMainCallback1(MainCallback callback);
+void __attribute__((long_call)) SetMainCallback2(MainCallback callback);
+void __attribute__((long_call)) ClearPokemonCrySongs(void);
+
+/*
 void AgbMain(void);
-void SetMainCallback2(MainCallback callback);
 void InitKeys(void);
 //void SetVBlankCallback(IntrCallback callback);
 //void SetHBlankCallback(IntrCallback callback);
-//void SetVCountCallback(IntrCallback callback);
-//void SetSerialCallback(IntrCallback callback);
+void SetVCountCallback(IntrCallback callback);
+void SetSerialCallback(IntrCallback callback);
 void InitFlashTimer(void);
-void DoSoftReset(void);
-void ClearPokemonCrySongs(void);
-void RestoreSerialTimer3IntrHandlers(void);
-void SetVBlankCounter1Ptr(u32 *ptr);
-void DisableVBlankCounter1(void);
-void StartTimer1(void);
-void SeedRngAndSetTrainerId(void);
-u16 GetGeneratedTrainerIdLower(void);
-
-extern const char RomHeaderGameCode[4];
-extern const char RomHeaderSoftwareVersion;
-
-extern u8 gLinkTransferringData;
-extern u16 gKeyRepeatStartDelay;
-
+*/
 #endif // GUARD_MAIN_H

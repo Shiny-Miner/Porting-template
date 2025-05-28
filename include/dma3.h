@@ -57,25 +57,25 @@
 #define Dma3FillLarge32_(value, dest, size) Dma3FillLarge_(value, dest, size, 32)
 
 // Cancel pending DMA3 requests
-void ClearDma3Requests(void);
+void __attribute__((long_call)) ClearDma3Requests(void);
 
 // Handle pending DMA3 requests
-void ProcessDma3Requests(void);
+void __attribute__((long_call)) ProcessDma3Requests(void);
 
 // Copy size bytes from src to dest.
 // mode takes a DMA3_*BIT macro
 // Returns the request index
-s16 RequestDma3Copy(const void *src, void *dest, u16 size, u8 mode);
+s16 __attribute__((long_call)) RequestDma3Copy(const void *src, void *dest, u16 size, u8 mode);
 
 // Fill size bytes at dest with value.
 // mode takes a DMA3_*BIT macro
 // Returns the request index
-s16 RequestDma3Fill(s32 value, void *dest, u16 size, u8 mode);
+s16 __attribute__((long_call)) RequestDma3Fill(s32 value, void *dest, u16 size, u8 mode);
 
 // index is the return value from RequestDma3*
 // if index = -1, will check if any request is pending
 // otherwise, checks if the specified request is pending
 // Returns -1 if pending, 0 otherwise
-s16 WaitDma3Request(s16 index);
+s16 __attribute__((long_call)) WaitDma3Request(s16 index);
 
 #endif // GUARD_DMA3_H

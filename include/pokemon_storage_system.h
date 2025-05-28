@@ -1,41 +1,44 @@
-#ifndef GUARD_POKEMON_STORAGE_SYSTEM_H
-#define GUARD_POKEMON_STORAGE_SYSTEM_H
+#pragma once
 
 #include "global.h"
+#include "pokemon.h"
 
-#define TOTAL_BOXES_COUNT       14
-#define IN_BOX_COUNT            30
+#define ORIGINAL_TOTAL_BOXES_COUNT 	14
+#define TOTAL_BOXES_COUNT       	25
+#define IN_BOX_ROWS             	5
+#define IN_BOX_COLUMNS          	6
+#define IN_BOX_COUNT            	(IN_BOX_ROWS * IN_BOX_COLUMNS)
 
-enum
+//So bytereplacement can call a constant
+#define TOTAL_BOXES_COUNT_1_LESS	24
+
+/*
+            ROWS
+COLUMNS     0   1   2   3   4   5
+            6   7   8   9   10  11
+            12  13  14  15  16  17
+            18  19  20  21  22  23
+            24  25  26  27  28  29
+*/
+
+struct PokemonStorage
 {
-    WALLPAPER_FOREST,
-    WALLPAPER_CITY,
-    WALLPAPER_DESERT,
-    WALLPAPER_SAVANNA,
-    WALLPAPER_CRAG,
-    WALLPAPER_VOLCANO,
-    WALLPAPER_SNOW,
-    WALLPAPER_CAVE,
-    WALLPAPER_BEACH,
-    WALLPAPER_SEAFLOOR,
-    WALLPAPER_RIVER,
-    WALLPAPER_SKY,
-    WALLPAPER_POLKADOT,
-    WALLPAPER_POKECENTER,
-    WALLPAPER_MACHINE,
-    WALLPAPER_PLAIN,
-    WALLPAPER_COUNT
+    /*0x0000*/ u8 currentBox;
+    /*0x0001*/ struct BoxPokemon boxes[ORIGINAL_TOTAL_BOXES_COUNT][IN_BOX_COUNT];
+    /*0x8344*/ u8 boxNames[ORIGINAL_TOTAL_BOXES_COUNT][9];
+    /*0x83C2*/ u8 boxWallpapers[ORIGINAL_TOTAL_BOXES_COUNT];
 };
 
-u8 *GetBoxNamePtr(u8 boxNumber);
-struct BoxPokemon *GetBoxedMonPtr(u8 boxId, u8 monPosition);
-void SetBoxMonNickAt(u8 boxId, u8 monPosition, const u8 *newNick);
-s16 CompactPartySlots(void);
-u32 GetBoxMonDataAt(u8 boxId, u8 monPosition, s32 request);
-void ZeroBoxMonAt(u8 boxId, u8 monPosition);
-void Cb2_ReturnToPSS(void);
-void ResetPokemonStorageSystem(void);
-u8 StorageGetCurrentBox(void);
-void DrawTextWindowAndBufferTiles(const u8 *string, void *dst, u8 zero1, u8 zero2, u8 *buffer, s32 bytesToBuffer);
+struct WallpaperTable
+{
+    const u8* tiles;
+    const u8* tileMap;
+    const u16* palettes;
+};
 
-#endif // GUARD_POKEMON_STORAGE_SYSTEM_H
+//extern struct PokemonStorage* gPokemonStoragePtr;
+
+u8 __attribute__((long_call)) StorageGetCurrentBox(void);
+void __attribute__((long_call)) CompactPartySlots(void);
+u16 __attribute__((long_call)) GetPCBoxToSendMon(void);
+void __attribute__((long_call)) SetPCBoxToSendMon(u8 id);

@@ -1,5 +1,4 @@
-#ifndef GUARD_CONSTANTS_ITEM_EFFECTS_H
-#define GUARD_CONSTANTS_ITEM_EFFECTS_H
+#pragma once
 
 // field 0 masks
 #define ITEM0_X_ATTACK          0x0F
@@ -75,5 +74,3 @@
 #define ITEM_EFFECT_PP_MAX 20
 #define ITEM_EFFECT_HEAL_PP 21
 #define ITEM_EFFECT_NONE 22
-
-#endif // GUARD_CONSTANTS_ITEM_EFFECTS_H
