@@ -4,7 +4,7 @@
 #include "config.h"
 #include "gba/gba.h"
 #include <string.h>
-#include "constants/flags.h"
+
 // Define unused parameters
 #define unusedArg __attribute__((unused))
 
@@ -400,44 +400,6 @@ struct BattleTowerData // Leftover from R/S
 	/*0x04D1, 0x0581*/ u8 filler_4D1[0x317];
 }; /* size = 0x7E8 */
 
-struct SaveBlock2 //0x2024588
-{
-	/*0x000*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
-	/*0x008*/ u8 playerGender; // MALE, FEMALE
-	/*0x009*/ u8 specialSaveWarpFlags;
-	/*0x00A*/ u8 playerTrainerId[4];
-	/*0x00E*/ u16 playTimeHours;
-	/*0x010*/ u8 playTimeMinutes;
-	/*0x011*/ u8 playTimeSeconds;
-	/*0x012*/ u8 playTimeVBlanks;
-	/*0x013*/ u8 optionsButtonMode;  // OPTIONS_BUTTON_MODE_[NORMAL/LR/L_EQUALS_A]
-	/*0x014*/ u16 optionsTextSpeed:3; // OPTIONS_TEXT_SPEED_[SLOW/MID/FAST]
-			  u16 optionsWindowFrameType:5; // Specifies one of the 20 decorative borders for text boxes
-	/*0x15*/  u16 optionsSound:1; // OPTIONS_SOUND_[MONO/STEREO]
-			  u16 optionsBattleStyle:1; // OPTIONS_BATTLE_STYLE_[SHIFT/SET]
-			  u16 optionsBattleSceneOff:1; // whether battle animations are disabled
-			  u16 regionMapZoom:1; // whether the map is zoomed in
-	/*0x018*/ struct Pokedex pokedex;
-	/*0x028*/ u8 filler_28[0x70];
-	/*0x098*/ struct Time localTimeOffset;
-	/*0x0A0*/ struct Time lastBerryTreeUpdate;
-	/*0x0A8*/ u32 gcnLinkFlags; // Read by Pokemon Colosseum/XD
-	/*0x0AC*/ u8 field_AC;
-	/*0x0AD*/ u8 field_AD;
-	/*0x0AE*/ u8 field_AE;
-	/*0x0AF*/ u8 field_AF;
-	/*0x0B0*/ u8 box25[0x6CC];
-	/*0x77C*/ u8 filler_77C[0x11C];
-	/*0x898*/ u16 mapView[0x100];
-	/*0xA98*/ struct LinkBattleRecords linkBattleRecords;
-	/*0xAF0*/ struct BerryCrush berryCrush;
-	/*0xB00*/ struct PokemonJumpResults pokeJump;
-	/*0xB10*/ struct BerryPickingResults berryPick;
-	/*0xB20*/ u8 filler_B20[0x400];
-	/*0xF20*/ u32 encryptionKey;
-};
-
-extern struct SaveBlock2* gSaveBlock2Ptr;
 
 #define PARTY_SIZE 6
 
@@ -738,7 +700,7 @@ struct TrainerNameRecord
 #define MAP_OBJECTS_COUNT  16
 #define EVENT_OBJECT_TEMPLATES_COUNT 64
 #define BERRY_TREES_COUNT  128
-
+#define FLAGS_COUNT        288 // 300
 #define VARS_COUNT         256
 #define MAIL_COUNT         16
 
@@ -763,8 +725,8 @@ struct SaveBlock1 //0x202552C
 	/*0x0294*/ u16 coins;
 	/*0x0296*/ u16 oldRegisteredItem; // was SELECT button item
 	/*0x0298*/ struct ItemSlot pcItems[PC_ITEMS_COUNT];
-	/*0x0310*/ u8 dexSeenFlags[(999 / 8) + 1]; //size = 125
-	/*0x038D*/ u8 dexCaughtFlags[(999 / 8) + 1];
+	/*0x0310*/ u8 dexSeenFlags[(1304 / 8) + 1]; //size = 125
+	/*0x038D*/ u8 dexCaughtFlags[(1304 / 8) + 1];
 	/*0x040A*/ u8 filler_40A[0x4E];
 	/*0x0458*/ struct BoxPokemon safeBackupParty[PARTY_SIZE]; // the party saved here is safe from tampering
 	/*0x0638*/ u16 trainerRematchStepCounter;
@@ -809,6 +771,50 @@ struct SaveBlock1 //0x202552C
 
 extern struct SaveBlock1* gSaveBlock1;
 
+struct SaveBlock2 //0x2024588
+{
+	/*0x000*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
+	/*0x008*/ u8 playerGender; // MALE, FEMALE
+	/*0x009*/ u8 specialSaveWarpFlags;
+	/*0x00A*/ u8 playerTrainerId[4];
+	/*0x00E*/ u16 playTimeHours;
+	/*0x010*/ u8 playTimeMinutes;
+	/*0x011*/ u8 playTimeSeconds;
+	/*0x012*/ u8 playTimeVBlanks;
+	/*0x013*/ u8 optionsButtonMode;  // OPTIONS_BUTTON_MODE_[NORMAL/LR/L_EQUALS_A]
+	/*0x014*/ u16 optionsTextSpeed:3; // OPTIONS_TEXT_SPEED_[SLOW/MID/FAST]
+			  u16 optionsWindowFrameType:5; // Specifies one of the 20 decorative borders for text boxes
+	/*0x15*/  u16 optionsSound:1; // OPTIONS_SOUND_[MONO/STEREO]
+			  u16 optionsBattleStyle:1; // OPTIONS_BATTLE_STYLE_[SHIFT/SET]
+			  u16 optionsBattleSceneOff:1; // whether battle animations are disabled
+			  u16 regionMapZoom:1; // whether the map is zoomed in
+	/*0x018*/ struct Pokedex pokedex;
+	/*0x028*/ u8 filler_28[0x70];
+	/*0x098*/ struct Time localTimeOffset;
+	/*0x0A0*/ struct Time lastBerryTreeUpdate;
+	/*0x0A8*/ u32 gcnLinkFlags; // Read by Pokemon Colosseum/XD
+	/*0x0AC*/ u8 field_AC;
+	/*0x0AD*/ u8 field_AD;
+	/*0x0AE*/ u8 field_AE;
+	/*0x0AF*/ u8 field_AF;
+	/*0x0B0*/ u8 box25[0x6CC];
+	/*0x77C*/ struct Pokemon fusedSpectrier;
+    	/*0x7E0*/ struct Pokemon fusedGlastrier;
+        /*0x844*/ u8 filler_77C[0x54];
+	/*0x898*/ u16 mapView[0x100];
+	/*0xA98*/ struct LinkBattleRecords linkBattleRecords;
+	/*0xAF0*/ struct BerryCrush berryCrush;
+	/*0xB00*/ struct PokemonJumpResults pokeJump;
+	/*0xB10*/ struct BerryPickingResults berryPick;
+	/*0xB20*/ u8 filler_B20[0x400];
+	/*0xF20*/ u32 encryptionKey;
+	/*0x???*/ //u16 optionsRButtonMode : 3;
+	/*0x???*/ //u16 optionsBattleMusic;
+};
+
+extern struct SaveBlock2* gSaveBlock2;
+
+
 struct MapPosition
 {
 	s16 x;
@@ -825,6 +831,7 @@ struct Bitmap           // TODO: Find a better spot for this
 
 extern u8 gReservedSpritePaletteCount;
 
+#define gText_Cancel ((u8*) 0x84161C1)
 
 struct Clock
 {
@@ -837,7 +844,7 @@ struct Clock
 	u8 minute;
 	u8 second;
 };
-extern bool8 gHelpSystemEnabled;
+
 extern struct Clock gClock; //0x3005EA0 - Was 0x300553C - new one doesn't conflict with linking
-extern void ShowPlayerTrainerCard(void (*callback)(void));
+
 #endif // GUARD_GLOBAL_H

@@ -3,6 +3,24 @@
 ==========================*/
 
 /* Party RAM */
+BattleMainCB2 = 0x8011100 | 1;
+CompactPartySlots = 0x80937DC | 1;
+CB2_NewGameOld = 0x8056644 | 1;
+FieldClearVBlankHBlankCallbacks = 0x80569BC | 1;
+StopMapMusic = 0x8071a94 | 1;
+ResetSafariZoneFlag_ = 0x8056420 | 1;
+DoWhiteOut = 0x8054bc8 | 1;
+SetInitialPlayerAvatarStateWithDirection = 0x80559f8 | 1;
+ScriptContext_Init = 0x8069a80 | 1;
+UnlockPlayerFieldControls = 0x806994c | 1;
+DoMapLoadLoop = 0x8056e5c | 1;
+QuestLog_CutRecording = 0x8112364 | 1;
+SetFieldVBlankCallback = 0x8056a04 | 1;
+FieldCB_RushInjuredPokemonToCenter = 0x948397C |1;
+IsPlayerDefeated = 0x80800d0 | 1;
+FieldCB_SafariZoneRanOutOfBalls = 0x807e3ec | 1;
+SetBattledTrainerFlag = 0x80803fc | 1;
+QuestLogEvents_HandleEndTrainerBattle = 0x81139bc | 1;
 gMultiPartnerParty = 0x2022B58;
 gPlayerPartyCount = 0x2024029;
 gEnemyParty = 0x202402C;
@@ -588,8 +606,6 @@ GetBattlerSide = 0x80751C4 | 1;
 GetBattlerPosition = 0x80751D8 | 1;
 GetBattlerAtPosition = 0x80751E8 | 1;
 IsDoubleBattle = 0x8075290 | 1;
-CB2_EndWildBattle = 0x807FB40 | 1;
-CB2_EndScriptedWildBattle_2 = 0x807FBA0 | 1;
 CB2_EndScriptedWildBattle = 0x807FBF0 | 1;
 GetWildBattleTransition = 0x807FF34 | 1;
 HasTrainerBeenFought = 0x8080424 | 1;
@@ -1263,11 +1279,13 @@ SetMapVarsToTrainer = 0x80801F0 | 1;
 /*BattleSetup_ConfigureTrainerBattle = 0x8080228 | 1;*/
 TrainerWantsBattle = 0x8080334 | 1;
 /*GetTrainerFlagFromScriptPointer = 0x8080378 | 1;*/
-CB2_EndTrainerBattle = 0x80804AC | 1;
 GetTrainerApproachDistance = 0x8081BEC | 1;
 TrainerApproachPlayer = 0x8081E68 | 1;
 GetRematchTrainerId = 0x810CE64 | 1;
-
+ForceClockUpdate = 0x9489184 |1;
+gFishingStreak = 0x203E058;
+gLastFishingSpecies = 0x203E056;
+gDontFadeWhite = 0x203C756;
 
 /* Questlog Functions */
 WriteQuestLog = 0x80A2294 | 1;

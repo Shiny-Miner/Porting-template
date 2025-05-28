@@ -1,16 +1,15 @@
-#ifndef GUARD_CONSTANTS_FIELD_EFFECTS_H 
-#define GUARD_CONSTANTS_FIELD_EFFECTS_H 
+#pragma once
 
-#define FLDEFF_EXCLAMATION_MARK_ICON      0
-#define FLDEFF_USE_CUT_ON_GRASS           1
-#define FLDEFF_USE_CUT_ON_TREE            2
-#define FLDEFF_SHADOW                     3
-#define FLDEFF_TALL_GRASS                 4
-#define FLDEFF_RIPPLE                     5
-#define FLDEFF_FIELD_MOVE_SHOW_MON        6
-#define FLDEFF_ASH                        7
-#define FLDEFF_SURF_BLOB                  8
-#define FLDEFF_USE_SURF                   9
+#define FLDEFF_EXCLAMATION_MARK_ICON     0
+#define FLDEFF_USE_CUT_ON_GRASS          1
+#define FLDEFF_USE_CUT_ON_TREE           2
+#define FLDEFF_SHADOW                    3
+#define FLDEFF_TALL_GRASS                4
+#define FLDEFF_RIPPLE                    5
+#define FLDEFF_FIELD_MOVE_SHOW_MON       6
+#define FLDEFF_ASH                       7
+#define FLDEFF_SURF_BLOB                 8
+#define FLDEFF_USE_SURF                  9
 #define FLDEFF_DUST                      10
 #define FLDEFF_USE_SECRET_POWER_CAVE     11
 #define FLDEFF_JUMP_TALL_GRASS           12
@@ -20,15 +19,15 @@
 #define FLDEFF_JUMP_SMALL_SPLASH         16
 #define FLDEFF_LONG_GRASS                17
 #define FLDEFF_JUMP_LONG_GRASS           18
-#define FLDEFF_UNKNOWN_19                19
-#define FLDEFF_UNKNOWN_20                20
-#define FLDEFF_UNKNOWN_21                21
-#define FLDEFF_UNKNOWN_22                22
+#define FLDEFF_SHAKING_GRASS             19
+#define FLDEFF_SHAKING_LONG_GRASS        20
+#define FLDEFF_SAND_HOLE                 21
+#define FLDEFF_SPLASHING_WATER           22
 #define FLDEFF_BERRY_TREE_GROWTH_SPARKLE 23
 #define FLDEFF_DEEP_SAND_FOOTPRINTS      24
 #define FLDEFF_POKECENTER_HEAL           25
-#define FLDEFF_USE_SECRET_POWER_TREE     26
-#define FLDEFF_USE_SECRET_POWER_SHRUB    27
+#define FLDEFF_CAVE_DUST    		 	 26 //NEW!
+#define FLDEFF_REPEATING_SPARKLES    	 27 //NEW!
 #define FLDEFF_TREE_DISGUISE             28
 #define FLDEFF_MOUNTAIN_DISGUISE         29
 #define FLDEFF_NPCFLY_OUT                30
@@ -48,16 +47,16 @@
 #define FLDEFF_USE_DIVE                  44
 #define FLDEFF_POKEBALL                  45
 #define FLDEFF_X_ICON                    46
-#define FLDEFF_NOP_47                    47
-#define FLDEFF_NOP_48                    48
+#define FLDEFF_LAVA_BUBBLES              47 //NEW!
+#define FLDEFF_THIN_RING                 48 //NEW!
 #define FLDEFF_POP_OUT_OF_ASH            49
 #define FLDEFF_LAVARIDGE_GYM_WARP        50
 #define FLDEFF_SWEET_SCENT               51
-#define FLDEFF_SAND_PILLAR               52
+#define FLDEFF_EXPLOSION               	 52 //NEW!
 #define FLDEFF_BUBBLES                   53
 #define FLDEFF_SPARKLE                   54
-#define FLDEFF_SECRET_POWER_CAVE         55
-#define FLDEFF_SECRET_POWER_TREE         56
+#define FLDEFF_USE_ROCK_CLIMB         	 55 //NEW!
+#define FLDEFF_ROCK_CLIMB_DUST           56 //NEW!
 #define FLDEFF_SECRET_POWER_SHRUB        57
 #define FLDEFF_CUT_GRASS                 58
 #define FLDEFF_FIELD_MOVE_SHOW_MON_INIT  59
@@ -70,7 +69,7 @@
 #define FLDEFF_DOUBLE_EXCL_MARK_ICON     66
 #define FLDEFF_MOVE_DEOXYS_ROCK          67
 #define FLDEFF_DESTROY_DEOXYS_ROCK       68
-#define FLDEFF_UNK_45                    69 // TODO: related to fame checker photos
+#define FLDEFF_SCREEN_FLASH              69
 
 #define FLDEFF_PAL_TAG_GENERAL_0          0x1004
 #define FLDEFF_PAL_TAG_GENERAL_1          0x1005
@@ -113,5 +112,3 @@
 #define FLDEFFOBJ_ASH_LAUNCH               33
 #define FLDEFFOBJ_BUBBLES                  34
 #define FLDEFFOBJ_SMALL_SPARKLE            35
-
-#endif // GUARD_CONSTANTS_FIELD_EFFECTS_H

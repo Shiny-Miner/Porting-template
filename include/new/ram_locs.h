@@ -14,7 +14,7 @@
 
 /*u8*/  //#define gDecompressionBuffer 	 ((u8*) 0x201C000)
 /*u32*/ #define gTrainerId 				*((u32*) 0x2020000)
-
+#define EVOS_PER_MON 16
 		#define gWindows ((struct Window*) 0x20204B4)
 /*u8*/  //#define gSprites ((struct Sprite*) 0x202063C)
 

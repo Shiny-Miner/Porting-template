@@ -23,7 +23,7 @@ void __attribute__((long_call)) BuildOAMBuffer(void);
 void __attribute__((long_call)) AnimateSprites(void);
 void __attribute__((long_call)) ScheduleBgCopyTilemapToVram(u8 bgid);
 void __attribute__((long_call)) CleanupOverworldWindowsAndTilemaps(void);
-//void __attribute__((long_call)) ResetBgsAndClearDma3BusyFlags(u8 bg);	// in bg.h
+void __attribute__((long_call)) ResetBgsAndClearDma3BusyFlags(u8 bg);	// in bg.h
 
 u32 __attribute__((long_call)) GetGameStat(u8 index);
 void __attribute__((long_call)) SetGameStat(u8 index, u32 value);

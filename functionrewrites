@@ -1,1 +1,4 @@
 ##
+CB2_EndTrainerBattle 0x080804ac 0 1
+CB2_EndWildBattle 0x0807fb40 0 1
+CB2_EndScriptedWildBattle_2 0x0807fba0 0 1

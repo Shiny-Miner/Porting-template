@@ -1,5 +1,4 @@
-#ifndef GUARD_SPRITE_H
-#define GUARD_SPRITE_H
+#pragma once
 
 #include "global.h"
 
@@ -8,22 +7,36 @@
 
 struct SpriteSheet
 {
-    const void *data;  // Raw uncompressed pixel data
+    const u8 *data;  // Raw uncompressed pixel data
     u16 size;
     u16 tag;
 };
 
 struct CompressedSpriteSheet
 {
-    const u32 *data;  // LZ77 compressed pixel data
+    const u8 *data;  // LZ77 compressed pixel data
     u16 size;        // Uncompressed size of pixel data
     u16 tag;
 };
 
 struct SpriteFrameImage
 {
-    const void *data;
+    const u8 *data;
     u16 size;
+	u16 _;
+};
+
+struct Frame {
+    u16 data;
+    u16 duration;
+};
+
+struct RotscaleFrame {
+    u16 scale_delta_x;
+    u16 scale_delta_y;
+    u8 rot_delta;
+    u8 duration;
+    u16 field_6;
 };
 
 #define obj_frame_tiles(ptr) {.data = (u8 *)ptr, .size = sizeof ptr}
@@ -37,7 +50,7 @@ struct SpritePalette
 
 struct CompressedSpritePalette
 {
-    const u32 *data;  // LZ77 compressed palette data
+    const u8 *data;  // LZ77 compressed palette data
     u16 tag;
 };
 
@@ -90,6 +103,7 @@ struct AffineAnimFrameCmd
     s16 yScale;
     u8 rotation;
     u8 duration;
+	u16 _;
 };
 
 struct AffineAnimLoopCmd
@@ -104,19 +118,12 @@ struct AffineAnimJumpCmd
     u16 target;
 };
 
-struct AffineAnimEndCmdAlt
-{
-    s16 type;
-    u16 val;
-};
-
 union AffineAnimCmd
 {
     s16 type;
     struct AffineAnimFrameCmd frame;
     struct AffineAnimLoopCmd loop;
     struct AffineAnimJumpCmd jump;
-    struct AffineAnimEndCmdAlt end;
 };
 
 #define AFFINEANIMCMDTYPE_LOOP 0x7FFD
@@ -135,8 +142,6 @@ union AffineAnimCmd
     {.loop = {.type = AFFINEANIMCMDTYPE_LOOP, .count = _count}}
 #define AFFINEANIMCMD_JUMP(_target) \
     {.jump = {.type = AFFINEANIMCMDTYPE_JUMP, .target = _target}}
-#define AFFINEANIMCMD_END_ALT(_val) \
-    {.end = {.type = AFFINEANIMCMDTYPE_END, .val = _val}}
 
 struct AffineAnimState
 {
@@ -174,8 +179,6 @@ struct SubspriteTable
 
 struct Sprite;
 
-typedef void (*SpriteCallback)(struct Sprite *);
-
 struct SpriteTemplate
 {
     u16 tileTag;
@@ -184,7 +187,7 @@ struct SpriteTemplate
     const union AnimCmd *const *anims;
     const struct SpriteFrameImage *images;
     const union AffineAnimCmd *const *affineAnims;
-    SpriteCallback callback;
+    void (*callback)(struct Sprite *);
 };
 
 struct Sprite
@@ -195,7 +198,7 @@ struct Sprite
     /*0x10*/ const union AffineAnimCmd *const *affineAnims;
     /*0x14*/ const struct SpriteTemplate *template;
     /*0x18*/ const struct SubspriteTable *subspriteTables;
-    /*0x1C*/ SpriteCallback callback;
+    /*0x1C*/ void (*callback)(struct Sprite *);
 
     /*0x20*/ struct Coords16 pos1;
     /*0x24*/ struct Coords16 pos2;
@@ -245,81 +248,107 @@ struct OamMatrix
     s16 d;
 };
 
+struct OamDimensions
+{
+    s8 width;
+    s8 height;
+	s8 filler1;
+	s8 filler2;
+};
+
 extern const struct OamData gDummyOamData;
 extern const union AnimCmd *const gDummySpriteAnimTable[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
 extern s16 gSpriteCoordOffsetX;
 extern s16 gSpriteCoordOffsetY;
-extern const struct SpriteTemplate gDummySpriteTemplate;
-extern struct Sprite gSprites[];
-extern struct OamMatrix gOamMatrices[];
-extern bool8 gAffineAnimsDisabled;
-extern u16 gReservedSpriteTileCount;
 
-void ResetSpriteData(void);
-void AnimateSprites(void);
-void BuildOamBuffer(void);
-u8 CreateSprite(const struct SpriteTemplate *template, s16 x, s16 y, u8 subpriority);
-u8 CreateSpriteAtEnd(const struct SpriteTemplate *template, s16 x, s16 y, u8 subpriority);
-u8 CreateInvisibleSprite(void (*callback)(struct Sprite *));
-u8 CreateSpriteAndAnimate(const struct SpriteTemplate *template, s16 x, s16 y, u8 subpriority);
-void DestroySprite(struct Sprite *sprite);
-void ResetOamRange(u8 a, u8 b);
-void LoadOam(void);
-void SetOamMatrix(u8 matrixNum, u16 a, u16 b, u16 c, u16 d);
-void CalcCenterToCornerVec(struct Sprite *sprite, u8 shape, u8 size, u8 affineMode);
-void SpriteCallbackDummy(struct Sprite *sprite);
-void ProcessSpriteCopyRequests(void);
-void RequestSpriteCopy(const u8 *src, u8 *dest, u16 size);
-void FreeSpriteTiles(struct Sprite *sprite);
-void FreeSpritePalette(struct Sprite *sprite);
-void FreeSpriteOamMatrix(struct Sprite *sprite);
-void DestroySpriteAndFreeResources(struct Sprite *sprite);
-void sub_800142C(u32 a1, u32 a2, u16 *a3, u16 a4, u32 a5);
-void AnimateSprite(struct Sprite *sprite);
-void StartSpriteAnim(struct Sprite *sprite, u8 animNum);
-void StartSpriteAnimIfDifferent(struct Sprite *sprite, u8 animNum);
-void SeekSpriteAnim(struct Sprite *sprite, u8 animCmdIndex);
-void StartSpriteAffineAnim(struct Sprite *sprite, u8 animNum);
-void StartSpriteAffineAnimIfDifferent(struct Sprite *sprite, u8 animNum);
-void ChangeSpriteAffineAnim(struct Sprite *sprite, u8 animNum);
-void ChangeSpriteAffineAnimIfDifferent(struct Sprite *sprite, u8 animNum);
-void SetSpriteSheetFrameTileNum(struct Sprite *sprite);
-u8 AllocOamMatrix(void);
-void FreeOamMatrix(u8 matrixNum);
-void InitSpriteAffineAnim(struct Sprite *sprite);
-void SetOamMatrixRotationScaling(u8 matrixNum, s16 xScale, s16 yScale, u16 rotation);
-u16 LoadSpriteSheet(const struct SpriteSheet *sheet);
-void LoadSpriteSheets(const struct SpriteSheet *sheets);
+extern const struct OamDimensions gOamDimensions[3][4];
+extern struct Sprite gSprites[];
+
+void __attribute__((long_call)) ResetSpriteData(void);
+void __attribute__((long_call)) AnimateSprites(void);
+void __attribute__((long_call)) BuildOamBuffer(void);
+void __attribute__((long_call)) UpdateOamCoords(void);
+void __attribute__((long_call)) BuildSpritePriorities(void);
+void __attribute__((long_call)) SortSprites(void);
+void __attribute__((long_call)) CopyMatricesToOamBuffer(void);
+void __attribute__((long_call)) AddSpritesToOamBuffer(void);
+u8 __attribute__((long_call)) CreateSprite(const struct SpriteTemplate *template, s16 x, s16 y, u8 subpriority);
+u8 __attribute__((long_call)) CreateSpriteAtEnd(const struct SpriteTemplate *template, s16 x, s16 y, u8 subpriority);
+u8 __attribute__((long_call)) CreateInvisibleSprite(void (*callback)(struct Sprite *));
+u8 __attribute__((long_call)) CreateSpriteAt(u8 index, const struct SpriteTemplate *template, s16 x, s16 y, u8 subpriority);
+u8 __attribute__((long_call)) CreateSpriteAndAnimate(const struct SpriteTemplate *template, s16 x, s16 y, u8 subpriority);
+void __attribute__((long_call)) DestroySprite(struct Sprite *sprite);
+void __attribute__((long_call)) ResetOamRange(u8 a, u8 b);
+void __attribute__((long_call)) LoadOam(void);
+void __attribute__((long_call)) ClearSpriteCopyRequests(void);
+void __attribute__((long_call)) ResetOamMatrices(void);
+void __attribute__((long_call)) SetOamMatrix(u8 matrixNum, u16 a, u16 b, u16 c, u16 d);
+void __attribute__((long_call)) ResetSprite(struct Sprite *sprite);
+void __attribute__((long_call)) CalcCenterToCornerVec(struct Sprite *sprite, u8 shape, u8 size, u8 affineMode);
+s16 __attribute__((long_call)) AllocSpriteTiles(u16 tileCount);
+void __attribute__((long_call)) SpriteCallbackDummy(struct Sprite *sprite);
+void __attribute__((long_call)) ProcessSpriteCopyRequests(void);
+void __attribute__((long_call)) RequestSpriteFrameImageCopy(u16 index, u16 tileNum, const struct SpriteFrameImage *images);
+void __attribute__((long_call)) RequestSpriteCopy(const u8 *src, u8 *dest, u16 size);
+void __attribute__((long_call)) CopyFromSprites(u8 *dest);
+void __attribute__((long_call)) CopyToSprites(u8 *src);
+void __attribute__((long_call)) ResetAllSprites(void);
+void __attribute__((long_call)) FreeSpriteTiles(struct Sprite *sprite);
+void __attribute__((long_call)) FreeSpritePalette(struct Sprite *sprite);
+void __attribute__((long_call)) FreeSpriteOamMatrix(struct Sprite *sprite);
+void __attribute__((long_call)) DestroySpriteAndFreeResources(struct Sprite *sprite);
+void __attribute__((long_call)) AnimateSprite(struct Sprite *sprite);
+void __attribute__((long_call)) StartSpriteAnim(struct Sprite *sprite, u8 animNum);
+void __attribute__((long_call)) StartSpriteAnimIfDifferent(struct Sprite *sprite, u8 animNum);
+void __attribute__((long_call)) SeekSpriteAnim(struct Sprite *sprite, u8 animCmdIndex);
+void __attribute__((long_call)) StartSpriteAffineAnim(struct Sprite *sprite, u8 animNum);
+void __attribute__((long_call)) StartSpriteAffineAnimIfDifferent(struct Sprite *sprite, u8 animNum);
+void __attribute__((long_call)) ChangeSpriteAffineAnim(struct Sprite *sprite, u8 animNum);
+void __attribute__((long_call)) ChangeSpriteAffineAnimIfDifferent(struct Sprite *sprite, u8 animNum);
+void __attribute__((long_call)) SetSpriteSheetFrameTileNum(struct Sprite *sprite);
+void __attribute__((long_call)) ResetAffineAnimData(void);
+u8 __attribute__((long_call)) AllocOamMatrix(void);
+void __attribute__((long_call)) FreeOamMatrix(u8 matrixNum);
+void __attribute__((long_call)) InitSpriteAffineAnim(struct Sprite *sprite);
+void __attribute__((long_call)) SetOamMatrixRotationScaling(u8 matrixNum, s16 xScale, s16 yScale, u16 rotation);
+void __attribute__((long_call)) CopyOamMatrix(u8 destMatrixIndex, struct OamMatrix *srcMatrix);
+u16 __attribute__((long_call)) LoadSpriteSheet(const struct SpriteSheet *sheet);
+void __attribute__((long_call)) LoadSpriteSheets(const struct SpriteSheet *sheets);
+void __attribute__((long_call)) FreeSpriteTilesByTag(u16 tag);
+void __attribute__((long_call)) FreeSpriteTileRanges(void);
+u16 __attribute__((long_call)) GetSpriteTileStartByTag(u16 tag);
+u8 __attribute__((long_call)) IndexOfSpriteTileTag(u16 tag);
+u16 __attribute__((long_call)) GetSpriteTileTagByTileStart(u16 start);
+void __attribute__((long_call)) AllocSpriteTileRange(u16 tag, u16 start, u16 count);
+void __attribute__((long_call)) FreeAllSpritePalettes(void);
+u8 __attribute__((long_call)) LoadSpritePalette(const struct SpritePalette *palette);
+void __attribute__((long_call)) LoadSpritePalettes(const struct SpritePalette *palettes);
+void __attribute__((long_call)) DoLoadSpritePalette(const u16 *src, u16 paletteOffset);
+u8 __attribute__((long_call)) AllocSpritePalette(u16 tag);
+u8 __attribute__((long_call)) IndexOfSpritePaletteTag(u16 tag);
+u16 __attribute__((long_call)) GetSpritePaletteTagByPaletteNum(u8 paletteNum);
+void __attribute__((long_call)) FreeSpritePaletteByTag(u16 tag);
+void __attribute__((long_call)) SetSubspriteTables(struct Sprite *sprite, const struct SubspriteTable *subspriteTables);
+bool8 __attribute__((long_call)) AddSpriteToOamBuffer(struct Sprite *sprite, u8 *oamIndex);
+bool8 __attribute__((long_call)) AddSubspritesToOamBuffer(struct Sprite *sprite, struct OamData *destOam, u8 *oamIndex);
+void __attribute__((long_call)) ResetSpriteData(void);
+u16 __attribute__((long_call)) CreateMonPicSprite_HandleDeoxys(u16 species, u32 otId, u32 personality, u8 flags, s16 x, s16 y, u8 paletteSlot, u16 paletteTag);
+void __attribute__((long_call)) SpriteCbAnimateOnScreen(struct Sprite *sprite);
+void __attribute__((long_call)) SetSpriteOamFlipBits(struct Sprite *sprite, u8 hFlip, u8 vFlip);
+void __attribute__((long_call)) *DecompressAndCopyTileDataToVram(u8 bgId, const void *src, u32 size, u16 offset, u8 mode);
+bool8 __attribute__((long_call)) FreeTempTileDataBuffersIfPossible(void);
+void __attribute__((long_call)) PlayCry7(u16 species, u8 mode);
+u8 __attribute__((long_call)) CreateMonSprite_FieldMove(u16 species, u32 otId, u32 personality, s16 x, s16 y, u8 subpriority);
+void __attribute__((long_call)) FreeResourcesAndDestroySprite(struct Sprite * sprite, u8 spriteId);
+void __attribute__((long_call)) QuestLog_CutRecording(void);
+
+/*
 u16 AllocTilesForSpriteSheet(struct SpriteSheet *sheet);
 void AllocTilesForSpriteSheets(struct SpriteSheet *sheets);
 void LoadTilesForSpriteSheet(const struct SpriteSheet *sheet);
 void LoadTilesForSpriteSheets(struct SpriteSheet *sheets);
-void FreeSpriteTilesByTag(u16 tag);
-void FreeSpriteTileRanges(void);
-u16 GetSpriteTileStartByTag(u16 tag);
-u16 GetSpriteTileTagByTileStart(u16 start);
 void RequestSpriteSheetCopy(const struct SpriteSheet *sheet);
 u16 LoadSpriteSheetDeferred(const struct SpriteSheet *sheet);
-void FreeAllSpritePalettes(void);
-u8 LoadSpritePalette(const struct SpritePalette *palette);
-void LoadSpritePalettes(const struct SpritePalette *palettes);
-u8 AllocSpritePalette(u16 tag);
-u8 IndexOfSpritePaletteTag(u16 tag);
-u16 GetSpritePaletteTagByPaletteNum(u8 paletteNum);
-void FreeSpritePaletteByTag(u16 tag);
-void SetSubspriteTables(struct Sprite *sprite, const struct SubspriteTable *subspriteTables);
-bool8 AddSpriteToOamBuffer(struct Sprite *object, u8 *oamIndex);
-bool8 AddSubspritesToOamBuffer(struct Sprite *sprite, struct OamData *destOam, u8 *oamIndex);
-void CopyToSprites(u8 *src);
-void CopyFromSprites(u8 *dest);
 u8 SpriteTileAllocBitmapOp(u16 bit, u8 op);
-void ClearSpriteCopyRequests(void);
-void ResetAffineAnimData(void);
-void sub_8007FFC(struct Sprite* sprite, s16 a2, s16 a3);
-void sub_80075C0(struct Sprite *sprite);
-s16 AllocSpriteTiles(u16 tileCount);
-void obj_pos2_update_enable(struct Sprite* sprite, s16 xmod, s16 ymod);
-u8 GetSpriteMatrixNum(struct Sprite *sprite);
-
-#endif //GUARD_SPRITE_H
+*/

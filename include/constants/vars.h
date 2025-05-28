@@ -1,5 +1,6 @@
-#ifndef GUARD_CONSTANTS_VARS_H
-#define GUARD_CONSTANTS_VARS_H
+#pragma once
+
+#define VAR_0x3F20                 0x3F20
 
 #define VARS_START 0x4000
 
@@ -47,15 +48,10 @@
 // Counts up every step. Wraps around at 128.
 // When wraparound occurs, the friendship of
 // every party poke gets a slight boost.
-#define VAR_HAPPINESS_STEP_COUNTER          0x4021
+#define VAR_FRIENDSHIP_STEP_COUNT           0x4021
 
-// Counts up every step while a party Pokemon is
-// poisoned. Wraps around at 5. When wraparound
-// occurs, every party Pokemon with the PSN status
-// takes 1 point of damage.
-// This is a deviation from the typical rate in
-// the series, which is 1 damage every 4 steps.
-#define VAR_POISON_STEP_COUNTER             0x4022
+// Maybe unused?
+#define VAR_0x4022                          0x4022
 
 // Step counter. Caps at 1500. If you enter a map with
 // renewable hidden items and this counter is capped,
@@ -84,8 +80,8 @@
 #define VAR_QUEST_LOG_MON_COUNTS           0x4027
 #define VAR_MENEWS_JISAN_STEP_COUNTER      0x4028
 #define VAR_0x4029                         0x4029
-#define VAR_0x402A                         0x402A
-#define VAR_0x402B                         0x402B
+#define VAR_HAPPINESS_STEP_COUNTER         0x402A
+#define VAR_POISON_STEP_COUNTER            0x402B
 #define VAR_RESET_RTC_ENABLE               0x402C
 #define VAR_0x402D                         0x402D
 #define VAR_0x402E                         0x402E
@@ -93,7 +89,7 @@
 #define VAR_0x402F                         0x402F
 
 #define VAR_ICE_STEP_COUNT                 0x4030
-#define VAR_STARTER_MON                    0x4031 // 0: Bulbasaur, 1: Squirtle, 2: Charmander
+#define VAR_STARTER_MON                    0x4031
 #define VAR_0x4032                         0x4032
 #define VAR_ENIGMA_BERRY_AVAILABLE         0x4033
 
@@ -122,8 +118,8 @@
 #define VAR_EGG_BRAG_STATE                 0x404A
 #define VAR_LINK_WIN_BRAG_STATE            0x404B
 #define VAR_POKELOT_RND2                   0x404C
-#define VAR_QL_ENTRANCE                    0x404D
-#define VAR_NATIONAL_DEX                   0x404E
+#define VAR_0x404D                         0x404D
+#define VAR_0x404E                         0x404E
 #define VAR_LOTAD_SIZE_RECORD              0x404F
 
 // Map Scene
@@ -135,7 +131,7 @@
 #define VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB                           0x4055
 #define VAR_MAP_SCENE_PALLET_TOWN_PLAYERS_HOUSE_2F                             0x4056
 #define VAR_MAP_SCENE_VIRIDIAN_CITY_MART                                       0x4057
-#define VAR_MAP_SCENE_PALLET_TOWN_RIVALS_HOUSE                                 0x4058
+#define VAR_MAP_SCENE_PALLET_TOWN_GARYS_HOUSE                                  0x4058
 #define VAR_MAP_SCENE_POKEMON_TOWER_6F                                         0x4059
 #define VAR_MAP_SCENE_VIRIDIAN_CITY_GYM_DOOR                                   0x405A
 #define VAR_MAP_SCENE_S_S_ANNE_2F_CORRIDOR                                     0x405B
@@ -158,7 +154,7 @@
 #define VAR_MAP_SCENE_PEWTER_CITY                                              0x406C
 #define VAR_0x406D                                                             0x406D
 #define VAR_MAP_SCENE_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE                        0x406E
-#define VAR_CABLE_CLUB_STATE                                                    0x406F
+#define VAR_CABLE_CLUB_STATE                                                   0x406F
 #define VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY                                    0x4070
 #define VAR_MAP_SCENE_CINNABAR_ISLAND                                          0x4071
 #define VAR_0x4072                                                             0x4072
@@ -219,10 +215,11 @@
 #define VAR_0x40A7                 0x40A7
 #define VAR_0x40A8                 0x40A8
 #define VAR_0x40A9                 0x40A9
-
-#define VAR_QLBAK_TRAINER_REMATCHES 0x40AA // array of 4
-#define VAR_QLBAK_MAP_LAYOUT        0x40AE
-
+#define VAR_0x40AA                 0x40AA
+#define VAR_0x40AB                 0x40AB
+#define VAR_0x40AC                 0x40AC
+#define VAR_0x40AD                 0x40AD
+#define VAR_0x40AE                 0x40AE
 #define VAR_0x40AF                 0x40AF
 #define VAR_0x40B0                 0x40B0
 #define VAR_0x40B1                 0x40B1
@@ -306,7 +303,6 @@
 #define VAR_0x40FF                 0x40FF
 
 #define VARS_END                   0x40FF
-#define VARS_COUNT                 (VARS_END - VARS_START + 1)
 
 #define SPECIAL_VARS_START         0x8000
 
@@ -326,12 +322,10 @@
 #define VAR_RESULT                 0x800D
 #define VAR_ITEM_ID                0x800E
 #define VAR_LAST_TALKED            0x800F
-#define VAR_MON_BOX_ID             0x8010
-#define VAR_MON_BOX_POS            0x8011
-#define VAR_TEXT_COLOR             0x8012
-#define VAR_PREV_TEXT_COLOR        0x8013
-#define VAR_0x8014                 0x8014 // Unknown/unused
+#define VAR_CONTEST_RANK           0x8010
+#define VAR_CONTEST_CATEGORY       0x8011
+#define VAR_MON_BOX_ID             0x8012
+#define VAR_MON_BOX_POS            0x8013
+#define VAR_TEXT_COLOR             0x8014
 
 #define SPECIAL_VARS_END           0x8014
-
-#endif // GUARD_CONSTANTS_VARS_H
