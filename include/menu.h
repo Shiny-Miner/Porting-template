@@ -63,5 +63,8 @@ void DrawStdFrameWithCustomTileAndPalette(u8 windowId, bool8 copyToVram, u16 bas
 void ClearDialogWindowAndFrameToTransparent(u8 windowId, bool8 copyToVram);
 void DrawDialogFrameWithCustomTileAndPalette(u8 windowId, bool8 copyToVram, u16 tileNum, u8 paletteNum);
 struct WindowTemplate SetWindowTemplateFields(u8 bg, u8 left, u8 top, u8 width, u8 height, u8 paletteNum, u16 baseBlock);
+bool8 __attribute__((long_call)) free_temp_tile_data_buffers_if_possible(void);
+int __attribute__((long_call)) DecompressAndCopyTileDataToVram(u8 bg_id, const void *src, int size, u16 offset, u8 mode);
+void __attribute__((long_call)) Menu_LoadStdPalAt(u16 arg0);
 
 #endif // GUARD_MENU_H

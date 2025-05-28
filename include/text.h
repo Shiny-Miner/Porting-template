@@ -203,6 +203,12 @@ struct TextPrinterTemplate // TODO: Better name
     u8 fgColor:4;
     u8 bgColor:4;
     u8 shadowColor:4;
+}; 
+struct TextColor
+{
+    u8 bgColor;
+    u8 fgColor;
+    u8 shadowColor;
 };
 
 struct TextPrinter

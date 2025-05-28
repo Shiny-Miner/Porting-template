@@ -1,7 +1,6 @@
 #ifndef GUARD_GLOBAL_BERRY_H
 #define GUARD_GLOBAL_BERRY_H
 
-#define BERRY_NAME_LENGTH 6
 #define BERRY_NAME_COUNT 7
 #define BERRY_ITEM_EFFECT_COUNT 18
 
@@ -72,7 +71,6 @@ struct BerryTree
     u8 watered2:1;
     u8 watered3:1;
     u8 watered4:1;
-    u8 filler;//SaveBlock1 fix emerald
 };
 
 #endif // GUARD_GLOBAL_BERRY_H

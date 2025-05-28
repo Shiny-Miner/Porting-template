@@ -2,6 +2,7 @@
 #define GUARD_WINDOW_H
 
 #include "global.h"
+#include "text.h"
 
 #define PIXEL_FILL(num) ((num) | ((num) << 4))
 
@@ -82,7 +83,7 @@ u16 AddWindow8Bit(const struct WindowTemplate *template);
 void FillWindowPixelBuffer8Bit(u8 windowId, u8 fillValue);
 void FillWindowPixelRect8Bit(u8 windowId, u8 fillValue, u16 x, u16 y, u16 width, u16 height);
 void BlitBitmapRectToWindow4BitTo8Bit(u8 windowId, const u8 *pixels, u16 srcX, u16 srcY, u16 srcWidth, int srcHeight, u16 destX, u16 destY, u16 rectWidth, u16 rectHeight, u8 paletteNum);
-
+u8 __attribute__((long_call)) WindowPrint(u8 windowId, u8 fontId, u8 left, u8 top, const struct TextColor* color, s8 speed, const u8 *str);
 extern void *gWindowBgTilemapBuffers[];
 extern struct Window gWindows[];
 

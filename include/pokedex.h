@@ -10,5 +10,5 @@ enum
 };
 
 s8 GetSetPokedexFlag(u16 nationalNum, u8 caseId);
-
+extern bool8 DoClosePokedex(void);
 #endif // GUARD_POKEDEX_H

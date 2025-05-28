@@ -95,8 +95,8 @@ void Overworld_ChangeMusicTo(u16);
 bool32 IsUpdateLinkStateCBActive(void);
 
 void ClearLinkPlayerObjectEvents(void);
-const struct MapHeader *const Overworld_GetMapHeaderByGroupAndId(u16, u16);
-void ObjectEventMoveDestCoords(struct ObjectEvent *, u32, s16 *, s16 *);
+//const struct MapHeader *const Overworld_GetMapHeaderByGroupAndId(u16, u16);
+//void ObjectEventMoveDestCoords(struct ObjectEvent *, u32, s16 *, s16 *);
 void CB2_ReturnToField(void);
 void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
 void WarpIntoMap(void);
@@ -149,7 +149,7 @@ bool32 Overworld_LinkRecvQueueLengthMoreThan2(void);
 u8 GetCurrentMapType(void);
 
 u8 GetLastUsedWarpMapType(void);
-const struct MapHeader *const GetDestinationWarpMapHeader(void);
+//const struct MapHeader *const GetDestinationWarpMapHeader(void);
 void TryFadeOutOldMapMusic(void);
 void CB2_ReturnToFieldCableClub(void);
 void ResetGameStats(void);
@@ -189,7 +189,7 @@ void StoreInitialPlayerAvatarState(void);
 void UpdateEscapeWarp(s16 x, s16 y);
 bool8 SetDiveWarpEmerge(u16 x, u16 y);
 bool8 SetDiveWarpDive(u16 x, u16 y);
-
+void FieldClearVBlankHBlankCallbacks(void);
 extern u16 *gBGTilemapBuffers1;
 extern u16 *gBGTilemapBuffers2;
 extern u16 *gBGTilemapBuffers3;

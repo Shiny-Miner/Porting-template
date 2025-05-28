@@ -2,7 +2,16 @@
 #define GUARD_BG_H
 
 #include "global.h"
+struct BgConfig2
+{
+    u32 baseTile:10;
+    u32 basePalette:4;
+    u32 unk_3:18;
 
+    void* tilemap;
+    u32 bg_x;
+    u32 bg_y;
+};
 struct BGCntrlBitfield // for the I/O registers
 {
     volatile u16 priority:2;
@@ -122,6 +131,7 @@ void CopyTileMapEntry(const u16 *src, u16 *dest, s32 palette1, s32 tileOffset, s
 u32 GetBgType(u8 bg);
 bool32 IsInvalidBg32(u8 bg);
 bool32 IsTileMapOutsideWram(u8 bg);
+void __attribute__((long_call)) ResetTempTileDataBuffers(void);
 
 extern bool32 gWindowTileAutoAllocEnabled;
 
