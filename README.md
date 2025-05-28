@@ -1,5 +1,5 @@
 # INFO
-This code just makes your party pokemon to be shown in tm case , only for FIRE RED BINARY.
+This code adds Shiny Miner's and grilokapu's Nuzlocke code used in CFRU expansion, to HUBOL (only)
 
 ## Build Instructions
 
